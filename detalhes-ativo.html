@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>REM Invest — Detalhes do Ativo</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #080E1C;
+  color: #E2E8F0;
+  min-height: 100vh;
+  display: flex;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 64px;
+  background: #0D1526;
+  border-right: 1px solid #1E293B;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 0;
+  gap: 4px;
+  flex-shrink: 0;
+  position: fixed;
+  top: 0; left: 0;
+  height: 100vh;
+  z-index: 100;
+}
+.sidebar-logo {
+  font-size: 13px;
+  font-weight: 800;
+  color: #22C55E;
+  margin-bottom: 20px;
+  letter-spacing: .04em;
+}
+.nav-item {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  gap: 3px;
+  color: #475569;
+  text-decoration: none;
+  transition: all .15s;
+}
+.nav-item:hover { background: #131D2E; color: #94A3B8; }
+.nav-item.active { background: #0F2460; color: #22C55E; }
+.nav-item i { font-size: 20px; }
+.nav-item span { font-size: 8px; font-weight: 600; }
+.sidebar-bottom { margin-top: auto; }
+.avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: #1E3A8A;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: #93C5FD;
+  margin-top: 12px;
+}
+
+/* ── MAIN ── */
+.main {
+  flex: 1;
+  margin-left: 64px;
+  padding: 28px 28px 40px;
+  background: #080E1C;
+  min-height: 100vh;
+  max-width: 980px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #475569;
+  text-decoration: none;
+  margin-bottom: 18px;
+  font-weight: 600;
+  transition: color .15s;
+}
+.back-link:hover { color: #94A3B8; }
+
+/* HERO */
+.hero {
+  background: #0D1526;
+  border: 1px solid #1E293B;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 22px;
+}
+.hero-top { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+.hero-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  flex-shrink: 0;
+}
+.hero-name { font-size: 18px; font-weight: 700; color: #E2E8F0; }
+.hero-type { font-size: 12px; color: #475569; margin-top: 3px; }
+
+.hero-price-row { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
+.hero-price-label {
+  font-size: 10px; color: #64748B; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px;
+}
+.hero-price-value { font-size: 32px; font-weight: 700; color: #E2E8F0; font-family: 'DM Mono', monospace; }
+.hero-updated { font-size: 11px; color: #475569; margin-top: 6px; display: flex; align-items: center; gap: 6px; }
+.live-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: #22C55E;
+  animation: livepulse 1.8s infinite;
+}
+@keyframes livepulse {
+  0%   { box-shadow: 0 0 0 0 rgba(34,197,94,.55); }
+  70%  { box-shadow: 0 0 0 7px rgba(34,197,94,0); }
+  100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+}
+
+.pct-badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 5px 11px; border-radius: 7px; font-size: 13px; font-weight: 600;
+}
+.pct-up { background: #052E16; color: #22C55E; }
+.pct-dn { background: #2D0A0A; color: #F43F5E; }
+
+/* SUMMARY */
+.summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.scard {
+  background: #0D1526;
+  border-radius: 14px;
+  padding: 16px;
+  border: 1px solid #1E293B;
+}
+.scard-label {
+  font-size: 10px; color: #64748B; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px;
+}
+.scard-value { font-size: 19px; font-weight: 700; color: #E2E8F0; font-family: 'DM Mono', monospace; }
+.scard-sub { font-size: 11px; font-weight: 600; margin-top: 5px; }
+.up  { color: #22C55E; }
+.dn  { color: #F43F5E; }
+.neu { color: #94A3B8; }
+
+/* ABOUT */
+.about {
+  background: #0D1526;
+  border: 1px solid #1E293B;
+  border-radius: 16px;
+  padding: 20px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #94A3B8;
+}
+.about-title { font-size: 13px; font-weight: 700; color: #E2E8F0; margin-bottom: 8px; }
+.note { font-size: 11px; color: #334155; margin-top: 14px; }
+
+.notfound { font-size: 14px; color: #94A3B8; }
+
+@media (max-width: 900px) {
+  .summary { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 600px) {
+  .main { margin-left: 0; padding: 16px; }
+  .sidebar { display: none; }
+  .summary { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-logo">R</div>
+  <a class="nav-item" href="rem_financeiro_desktop.html"><i class="ti ti-home"></i><span>Início</span></a>
+  <a class="nav-item active" href="carteira.html"><i class="ti ti-chart-pie"></i><span>Carteira</span></a>
+  <a class="nav-item" href="ativos.html"><i class="ti ti-search"></i><span>Ativos</span></a>
+  <a class="nav-item" href="rem_invest_watchlist.html"><i class="ti ti-chart-bar"></i><span>Análise</span></a>
+  <a class="nav-item sidebar-bottom" href="config.html"><i class="ti ti-settings"></i><span>Config</span></a>
+  <div class="avatar">LM</div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <a class="back-link" href="carteira.html"><i class="ti ti-arrow-left"></i> Voltar para a carteira</a>
+
+  <div id="content"></div>
+</div>
+
+<script>
+  const ASSETS = {
+    PETR4: {
+      name: 'Petrobras', ticker: 'PETR4', type: 'Ação • B3', source: 'acao',
+      qty: 100, avg: 34.32, icon: { bg: '#1E3A5F', color: '#60A5FA' },
+      about: 'Petrobras é uma das maiores empresas de petróleo e gás do Brasil, com atuação em exploração, produção, refino e distribuição.'
+    },
+    VALE3: {
+      name: 'Vale', ticker: 'VALE3', type: 'Ação • B3', source: 'acao',
+      qty: 50, avg: 66.80, icon: { bg: '#3D1A1A', color: '#F87171' },
+      about: 'Vale é uma mineradora brasileira, uma das maiores produtoras de minério de ferro e níquel do mundo.'
+    },
+    MXRF11: {
+      name: 'Maxi Renda', ticker: 'MXRF11', type: 'FII • B3', source: 'acao',
+      qty: 800, avg: 9.94, icon: { bg: '#1A3D2B', color: '#4ADE80' },
+      about: 'Maxi Renda é um fundo imobiliário (FII) focado em recebíveis e ativos de renda, com distribuição mensal de proventos.'
+    },
+    CDB: {
+      name: 'CDB Nubank', ticker: 'CDB', type: 'Renda Fixa • 102% CDI', source: 'cdb',
+      principal: 5000, aplicadoEm: '2025-11-01T00:00:00', percentCDI: 102, cdiAnualFallback: 0.1065,
+      icon: { bg: '#1E2A50', color: '#A5B4FC' },
+      about: 'Certificado de Depósito Bancário emitido pelo Nubank, remunerado a 102% do CDI, com liquidez conforme as regras do emissor.'
+    },
+    BTC: {
+      name: 'Bitcoin', ticker: 'BTC', type: 'Cripto • Binance', source: 'cripto',
+      qty: 0.12, avg: 52400, icon: { bg: '#2D2010', color: '#FCD34D' },
+      about: 'Bitcoin é a primeira e maior criptomoeda por valor de mercado, negociada 24 horas por dia em exchanges como a Binance.'
+    }
+  };
+
+  function formatBRL(v) {
+    return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  }
+
+  function pctBadgeHTML(pct) {
+    if (pct === null || Number.isNaN(pct)) return '<span class="pct-badge">--</span>';
+    const up = pct >= 0;
+    return `<span class="pct-badge ${up ? 'pct-up' : 'pct-dn'}">${up ? '▲ +' : '▼ '}${pct.toFixed(1).replace('.', ',')}%</span>`;
+  }
+
+  function render(asset, price, varPct, sourceLabel) {
+    const investido = asset.source === 'cdb' ? asset.principal : asset.qty * asset.avg;
+    const valorAtual = asset.source === 'cdb' ? price : asset.qty * price;
+    const lucro = valorAtual - investido;
+    const lucroPct = (lucro / investido) * 100;
+
+    document.getElementById('content').innerHTML = `
+      <div class="hero">
+        <div class="hero-top">
+          <div class="hero-icon" style="background:${asset.icon.bg};color:${asset.icon.color}">${asset.ticker}</div>
+          <div>
+            <div class="hero-name">${asset.name}</div>
+            <div class="hero-type">${asset.type}</div>
+          </div>
+        </div>
+        <div class="hero-price-row">
+          <div>
+            <div class="hero-price-label">${asset.source === 'cdb' ? 'Valor atual da posição' : 'Preço atual'}</div>
+            <div class="hero-price-value">${formatBRL(price)}</div>
+            <div class="hero-updated"><span class="live-dot"></span> <span id="updated-text">Atualizado agora</span></div>
+          </div>
+          ${pctBadgeHTML(varPct)}
+        </div>
+      </div>
+
+      <div class="summary">
+        <div class="scard">
+          <div class="scard-label">Quantidade</div>
+          <div class="scard-value">${asset.source === 'cdb' ? '1 aplicação' : asset.qty}</div>
+        </div>
+        <div class="scard">
+          <div class="scard-label">${asset.source === 'cdb' ? 'Valor aplicado' : 'Preço médio'}</div>
+          <div class="scard-value">${asset.source === 'cdb' ? formatBRL(asset.principal) : formatBRL(asset.avg)}</div>
+        </div>
+        <div class="scard">
+          <div class="scard-label">Total investido</div>
+          <div class="scard-value">${formatBRL(investido)}</div>
+          <div class="scard-sub neu">valor aportado</div>
+        </div>
+        <div class="scard">
+          <div class="scard-label">${asset.source === 'cdb' ? 'Rendimento' : 'Lucro/Prejuízo'}</div>
+          <div class="scard-value ${lucro >= 0 ? 'up' : 'dn'}">${lucro >= 0 ? '+' : ''}${formatBRL(lucro)}</div>
+          <div class="scard-sub ${lucro >= 0 ? 'up' : 'dn'}">${lucro >= 0 ? '+' : ''}${lucroPct.toFixed(1).replace('.', ',')}%</div>
+        </div>
+      </div>
+
+      <div class="about">
+        <div class="about-title">Sobre este ativo</div>
+        ${asset.about}
+        <div class="note">Fonte da cotação: ${sourceLabel}</div>
+      </div>
+    `;
+  }
+
+  async function loadAcao(asset) {
+    try {
+      const res = await fetch(`https://brapi.dev/api/quote/${asset.ticker}`);
+      const data = await res.json();
+      if (data.error || !data.results || !data.results.length) throw new Error('sem token');
+      const r = data.results[0];
+      render(asset, r.regularMarketPrice, r.regularMarketChangePercent, 'B3 via brapi.dev');
+    } catch (e) {
+      render(asset, asset.avg, 0, 'preço médio (cotação ao vivo indisponível sem token para este ticker)');
+    }
+  }
+
+  async function loadCripto(asset) {
+    try {
+      const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=brl&include_24hr_change=true');
+      const data = await res.json();
+      render(asset, data.bitcoin.brl, data.bitcoin.brl_24h_change, 'CoinGecko');
+    } catch (e) {
+      render(asset, asset.avg, 0, 'preço médio (cotação ao vivo indisponível no momento)');
+    }
+  }
+
+  async function loadCDB(asset) {
+    let cdiAnual = asset.cdiAnualFallback;
+    try {
+      const res = await fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs.12/dados/ultimos/1?formato=json');
+      const data = await res.json();
+      const cdiDiaria = parseFloat(data[0].valor.replace(',', '.')) / 100;
+      cdiAnual = Math.pow(1 + cdiDiaria, 252) - 1;
+    } catch (e) { /* usa o fallback */ }
+
+    const taxaAnual = cdiAnual * (asset.percentCDI / 100);
+    const inicio = new Date(asset.aplicadoEm).getTime();
+
+    function currentValue() {
+      const elapsedYears = (Date.now() - inicio) / (1000 * 365 * 24 * 3600);
+      return asset.principal * Math.pow(1 + taxaAnual, elapsedYears);
+    }
+
+    const valor = currentValue();
+    const rendPct = ((valor - asset.principal) / asset.principal) * 100;
+    render(asset, valor, rendPct, 'taxa CDI · Banco Central do Brasil (estimativa)');
+
+    setInterval(() => {
+      const v = currentValue();
+      const pct = ((v - asset.principal) / asset.principal) * 100;
+      render(asset, v, pct, 'taxa CDI · Banco Central do Brasil (estimativa)');
+    }, 1000);
+  }
+
+  function init() {
+    const params = new URLSearchParams(window.location.search);
+    const ticker = (params.get('ticker') || '').toUpperCase();
+    const asset = ASSETS[ticker];
+
+    if (!asset) {
+      document.getElementById('content').innerHTML = `
+        <div class="hero">
+          <div class="notfound">Ativo não encontrado. Volte para a carteira e clique em um ativo da lista.</div>
+        </div>`;
+      return;
+    }
+
+    if (asset.source === 'acao') {
+      loadAcao(asset);
+      setInterval(() => loadAcao(asset), 30000);
+    } else if (asset.source === 'cripto') {
+      loadCripto(asset);
+      setInterval(() => loadCripto(asset), 30000);
+    } else if (asset.source === 'cdb') {
+      loadCDB(asset);
+    }
+  }
+
+  init();
+</script>
+
+</body>
+</html>

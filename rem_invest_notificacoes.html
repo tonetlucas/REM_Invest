@@ -1,0 +1,298 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  width: 100vw;
+  height: 100%;
+}
+.app{display:flex;height:100%;background:#080E1C;font-family:'DM Sans',sans-serif;color:#E2E8F0;border-radius:16px;overflow:hidden;border:1.5px solid #1E293B}
+
+/* SIDEBAR */
+.sidebar{width:64px;background:#0D1526;border-right:1px solid #1E293B;display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:4px;flex-shrink:0}
+.sidebar-logo{font-size:13px;font-weight:800;color:#22C55E;margin-bottom:20px}
+.nav-item{width:44px;height:44px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:3px;color:#475569;position:relative}
+.nav-item.active{background:#0F2460;color:#22C55E}
+.nav-item i{font-size:20px}
+.nav-item span{font-size:8px;font-weight:600}
+.nav-badge{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:#F43F5E;border:2px solid #0D1526}
+.avatar{width:34px;height:34px;border-radius:50%;background:#1E3A8A;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#93C5FD;margin-top:12px}
+
+/* MAIN */
+.main{flex:1;display:flex;height:100%;overflow:hidden}
+
+/* NOTIF NAV */
+.notif-nav{width:200px;flex-shrink:0;padding:20px 14px;border-right:1px solid #1E293B;overflow-y:auto}
+.nav-title{font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;padding-left:6px}
+.nnav-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;border-radius:9px;cursor:pointer;color:#64748B;font-size:12px;font-weight:500;transition:all .15s;margin-bottom:2px}
+.nnav-item:hover{background:#0D1526;color:#94A3B8}
+.nnav-item.active{background:#0F2060;color:#22C55E}
+.nnav-left{display:flex;align-items:center;gap:8px}
+.nnav-count{font-size:10px;font-weight:700;background:#1E3A8A;color:#93C5FD;padding:2px 7px;border-radius:10px;min-width:20px;text-align:center}
+.nnav-count.red{background:#2D0A0A;color:#F87171}
+.nnav-divider{height:1px;background:#1E293B;margin:10px 0}
+
+/* CONTENT */
+.notif-content{flex:1;overflow-y:auto;padding:20px}
+
+/* TOPBAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.page-title{font-size:17px;font-weight:700;color:#E2E8F0}
+.topbar-actions{display:flex;gap:8px}
+.btn-mark{background:transparent;border:1px solid #1E293B;border-radius:8px;padding:7px 12px;font-size:11px;font-weight:600;color:#475569;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.btn-mark:hover{border-color:#334155;color:#94A3B8}
+.btn-clear{background:#2D0A0A;border:1px solid #7F1D1D;border-radius:8px;padding:7px 12px;font-size:11px;font-weight:600;color:#F87171;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.btn-clear:hover{background:#3D1010;color:#FCA5A5}
+
+/* DATE GROUP */
+.date-group{margin-bottom:20px}
+.date-label{font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;padding-left:2px}
+
+/* NOTIF ITEM */
+.notif-item{display:flex;align-items:flex-start;gap:12px;padding:13px 14px;border-radius:12px;border:1px solid #131D2E;background:#080E1C;margin-bottom:8px;transition:all .15s;cursor:pointer;position:relative}
+.notif-item:hover{border-color:#1E293B;background:#0A1020}
+.notif-item.unread{border-color:#1E3A8A;background:#080E1C}
+.notif-item.unread::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:60%;background:#22C55E;border-radius:0 3px 3px 0}
+.notif-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;margin-top:1px}
+.notif-body{flex:1;min-width:0}
+.notif-title{font-size:13px;font-weight:600;color:#E2E8F0;line-height:1.3}
+.notif-item.unread .notif-title{color:#fff}
+.notif-desc{font-size:11px;color:#475569;margin-top:4px;line-height:1.5}
+.notif-time{font-size:10px;color:#334155;margin-top:6px;display:flex;align-items:center;gap:4px}
+.notif-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0}
+.unread-dot{width:8px;height:8px;border-radius:50%;background:#22C55E}
+.notif-tag{font-size:10px;padding:3px 8px;border-radius:6px;font-weight:600;white-space:nowrap}
+.tag-green{background:#052E16;color:#22C55E;border:1px solid #14532D}
+.tag-red{background:#2D0A0A;color:#F87171;border:1px solid #7F1D1D}
+.tag-blue{background:#0F2060;color:#93C5FD;border:1px solid #1E3A8A}
+.tag-yellow{background:#1C1207;color:#FCD34D;border:1px solid #78350F}
+.tag-purple{background:#1E1A40;color:#A78BFA;border:1px solid #3730A3}
+.notif-dismiss{color:#1E293B;font-size:14px;cursor:pointer;padding:2px;border-radius:5px;transition:all .15s}
+.notif-dismiss:hover{color:#F43F5E;background:#2D0A0A}
+
+/* EMPTY */
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;color:#334155;text-align:center}
+.empty i{font-size:40px;margin-bottom:14px;color:#1E293B}
+.empty p{font-size:13px;line-height:1.6}
+</style>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-logo">R</div>
+    <div class="nav-item"><i class="ti ti-home" aria-hidden="true"></i><span>Início</span></div>
+    <div class="nav-item"><i class="ti ti-chart-pie" aria-hidden="true"></i><span>Carteira</span></div>
+    <div class="nav-item"><i class="ti ti-search" aria-hidden="true"></i><span>Ativos</span></div>
+    <div class="nav-item"><i class="ti ti-eye" aria-hidden="true"></i><span>Watch</span></div>
+    <div class="nav-item active" style="margin-top:auto">
+      <i class="ti ti-bell" aria-hidden="true"></i>
+      <div class="nav-badge"></div>
+      <span>Avisos</span>
+    </div>
+    <div class="avatar">LM</div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- NOTIF NAV -->
+    <div class="notif-nav">
+      <div class="nav-title">Caixa de entrada</div>
+
+      <div class="nnav-item active" onclick="setNNav(this)">
+        <div class="nnav-left"><i class="ti ti-inbox" aria-hidden="true"></i>Todas</div>
+        <span class="nnav-count">7</span>
+      </div>
+      <div class="nnav-item" onclick="setNNav(this)">
+        <div class="nnav-left"><i class="ti ti-circle-dot" aria-hidden="true"></i>Não lidas</div>
+        <span class="nnav-count red">4</span>
+      </div>
+
+      <div class="nnav-divider"></div>
+      <div class="nav-title">Categorias</div>
+
+      <div class="nnav-item" onclick="setNNav(this)">
+        <div class="nnav-left"><i class="ti ti-trending-up" aria-hidden="true"></i>Alertas de preço</div>
+        <span class="nnav-count">3</span>
+      </div>
+      <div class="nnav-item" onclick="setNNav(this)">
+        <div class="nnav-left"><i class="ti ti-cash" aria-hidden="true"></i>Proventos</div>
+        <span class="nnav-count">2</span>
+      </div>
+      <div class="nnav-item" onclick="setNNav(this)">
+        <div class="nnav-left"><i class="ti ti-news" aria-hidden="true"></i>Notícias</div>
+        <span class="nnav-count">2</span>
+      </div>
+      <div class="nnav-item" onclick="setNNav(this)">
+        <div class="nnav-left"><i class="ti ti-shield" aria-hidden="true"></i>Sistema</div>
+      </div>
+
+      <div class="nnav-divider"></div>
+      <div class="nnav-item" onclick="setNNav(this)">
+        <div class="nnav-left"><i class="ti ti-archive" aria-hidden="true"></i>Arquivadas</div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="notif-content">
+
+      <div class="topbar">
+        <div class="page-title">Notificações <span style="font-size:13px;color:#475569;font-weight:400">• 4 não lidas</span></div>
+        <div class="topbar-actions">
+          <button class="btn-mark" onclick="markAllRead()">Marcar todas como lidas</button>
+          <button class="btn-clear" onclick="clearAll()">Limpar tudo</button>
+        </div>
+      </div>
+
+      <!-- HOJE -->
+      <div class="date-group" id="notif-list">
+        <div class="date-label">Hoje</div>
+
+        <div class="notif-item unread">
+          <div class="notif-icon" style="background:#052E16"><i class="ti ti-trending-up" style="color:#22C55E" aria-hidden="true"></i></div>
+          <div class="notif-body">
+            <div class="notif-title">Alerta de preço atingido — HGLG11</div>
+            <div class="notif-desc">CSHG Logística superou R$ 162,00 e atingiu sua meta de acompanhamento. Cotação atual: <strong style="color:#22C55E">R$ 162,40 (+0,74%)</strong>.</div>
+            <div class="notif-time"><i class="ti ti-clock" style="font-size:10px" aria-hidden="true"></i>Há 12 minutos</div>
+          </div>
+          <div class="notif-right">
+            <div class="unread-dot"></div>
+            <span class="notif-tag tag-green">Alerta</span>
+            <div class="notif-dismiss" onclick="dismiss(this)"><i class="ti ti-x" aria-hidden="true"></i></div>
+          </div>
+        </div>
+
+        <div class="notif-item unread">
+          <div class="notif-icon" style="background:#1A3D2B"><i class="ti ti-cash" style="color:#4ADE80" aria-hidden="true"></i></div>
+          <div class="notif-body">
+            <div class="notif-title">Provento creditado — MXRF11</div>
+            <div class="notif-desc">Maxi Renda FII pagou dividendos hoje. Valor recebido: <strong style="color:#22C55E">+R$ 72,00</strong> (R$ 0,09/cota × 800 cotas).</div>
+            <div class="notif-time"><i class="ti ti-clock" style="font-size:10px" aria-hidden="true"></i>Há 1 hora</div>
+          </div>
+          <div class="notif-right">
+            <div class="unread-dot"></div>
+            <span class="notif-tag tag-green">Provento</span>
+            <div class="notif-dismiss" onclick="dismiss(this)"><i class="ti ti-x" aria-hidden="true"></i></div>
+          </div>
+        </div>
+
+        <div class="notif-item unread">
+          <div class="notif-icon" style="background:#2D0A0A"><i class="ti ti-trending-down" style="color:#F87171" aria-hidden="true"></i></div>
+          <div class="notif-body">
+            <div class="notif-title">Queda expressiva — VALE3</div>
+            <div class="notif-desc">Vale ON acumulou queda de <strong style="color:#F43F5E">-5,2%</strong> nas últimas 3 horas. Cotação: R$ 62,10. Seu prejuízo atual é de -R$ 235.</div>
+            <div class="notif-time"><i class="ti ti-clock" style="font-size:10px" aria-hidden="true"></i>Há 2 horas</div>
+          </div>
+          <div class="notif-right">
+            <div class="unread-dot"></div>
+            <span class="notif-tag tag-red">Queda</span>
+            <div class="notif-dismiss" onclick="dismiss(this)"><i class="ti ti-x" aria-hidden="true"></i></div>
+          </div>
+        </div>
+
+        <div class="notif-item unread">
+          <div class="notif-icon" style="background:#1C1207"><i class="ti ti-news" style="color:#FCD34D" aria-hidden="true"></i></div>
+          <div class="notif-body">
+            <div class="notif-title">Notícia relevante — Petrobras</div>
+            <div class="notif-desc">Governo anuncia nova política de preços de combustíveis. Analistas preveem impacto positivo nos resultados da PETR4 no próximo trimestre.</div>
+            <div class="notif-time"><i class="ti ti-clock" style="font-size:10px" aria-hidden="true"></i>Há 3 horas</div>
+          </div>
+          <div class="notif-right">
+            <div class="unread-dot"></div>
+            <span class="notif-tag tag-yellow">Notícia</span>
+            <div class="notif-dismiss" onclick="dismiss(this)"><i class="ti ti-x" aria-hidden="true"></i></div>
+          </div>
+        </div>
+
+        <!-- ONTEM -->
+        <div class="date-label" style="margin-top:20px">Ontem</div>
+
+        <div class="notif-item">
+          <div class="notif-icon" style="background:#0F2060"><i class="ti ti-chart-bar" style="color:#60A5FA" aria-hidden="true"></i></div>
+          <div class="notif-body">
+            <div class="notif-title">Resumo semanal da carteira</div>
+            <div class="notif-desc">Sua carteira valorizou <strong style="color:#22C55E">+2,63%</strong> esta semana. Patrimônio atual: R$ 48.320. Melhor ativo: ETH (+3,22%).</div>
+            <div class="notif-time"><i class="ti ti-clock" style="font-size:10px" aria-hidden="true"></i>Ontem, 08:00</div>
+          </div>
+          <div class="notif-right">
+            <span class="notif-tag tag-blue">Relatório</span>
+            <div class="notif-dismiss" onclick="dismiss(this)"><i class="ti ti-x" aria-hidden="true"></i></div>
+          </div>
+        </div>
+
+        <div class="notif-item">
+          <div class="notif-icon" style="background:#1A3D2B"><i class="ti ti-cash" style="color:#4ADE80" aria-hidden="true"></i></div>
+          <div class="notif-body">
+            <div class="notif-title">Provento previsto — PETR4</div>
+            <div class="notif-desc">Petrobras pagará JCP no valor de R$ 1,87/ação em 30/06/2026. Você receberá aproximadamente <strong style="color:#22C55E">+R$ 187,00</strong>.</div>
+            <div class="notif-time"><i class="ti ti-clock" style="font-size:10px" aria-hidden="true"></i>Ontem, 14:32</div>
+          </div>
+          <div class="notif-right">
+            <span class="notif-tag tag-green">Provento</span>
+            <div class="notif-dismiss" onclick="dismiss(this)"><i class="ti ti-x" aria-hidden="true"></i></div>
+          </div>
+        </div>
+
+        <div class="notif-item">
+          <div class="notif-icon" style="background:#1E1A40"><i class="ti ti-shield-check" style="color:#A78BFA" aria-hidden="true"></i></div>
+          <div class="notif-body">
+            <div class="notif-title">Login realizado com sucesso</div>
+            <div class="notif-desc">Novo acesso detectado via Chrome — Windows 11. Se não foi você, altere sua senha imediatamente.</div>
+            <div class="notif-time"><i class="ti ti-clock" style="font-size:10px" aria-hidden="true"></i>Ontem, 09:14</div>
+          </div>
+          <div class="notif-right">
+            <span class="notif-tag tag-purple">Sistema</span>
+            <div class="notif-dismiss" onclick="dismiss(this)"><i class="ti ti-x" aria-hidden="true"></i></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="empty" id="empty-state" style="display:none">
+        <i class="ti ti-bell-off"></i>
+        <p>Nenhuma notificação por aqui.<br>Você está em dia com tudo!</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  function setNNav(el) {
+    document.querySelectorAll('.nnav-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function dismiss(btn) {
+    const item = btn.closest('.notif-item');
+    item.style.transition = 'opacity .2s, transform .2s';
+    item.style.opacity = '0';
+    item.style.transform = 'translateX(12px)';
+    setTimeout(() => {
+      item.remove();
+      checkEmpty();
+    }, 200);
+  }
+
+  function markAllRead() {
+    document.querySelectorAll('.notif-item.unread').forEach(item => {
+      item.classList.remove('unread');
+      const dot = item.querySelector('.unread-dot');
+      if (dot) dot.remove();
+    });
+    document.querySelector('.nav-badge').style.display = 'none';
+  }
+
+  function clearAll() {
+    if (!confirm('Deseja apagar todas as notificações?')) return;
+    document.querySelectorAll('.notif-item').forEach(item => item.remove());
+    document.querySelectorAll('.date-label').forEach(l => l.remove());
+    checkEmpty();
+  }
+
+  function checkEmpty() {
+    const remaining = document.querySelectorAll('.notif-item').length;
+    document.getElementById('empty-state').style.display = remaining === 0 ? 'flex' : 'none';
+  }
+</script>

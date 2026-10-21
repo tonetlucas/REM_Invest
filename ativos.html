@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>REM Invest — Detalhes do Ativo</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #080E1C;
+  color: #E2E8F0;
+  min-height: 100vh;
+  display: flex;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 64px;
+  background: #0D1526;
+  border-right: 1px solid #1E293B;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 0;
+  gap: 4px;
+  flex-shrink: 0;
+  position: fixed;
+  top: 0; left: 0;
+  height: 100vh;
+  z-index: 100;
+}
+.sidebar-logo {
+  font-size: 13px;
+  font-weight: 800;
+  color: #22C55E;
+  margin-bottom: 20px;
+  letter-spacing: .04em;
+}
+.nav-item {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  gap: 3px;
+  color: #475569;
+  text-decoration: none;
+  transition: all .15s;
+}
+.nav-item:hover { background: #131D2E; color: #94A3B8; }
+.nav-item.active { background: #0F2460; color: #22C55E; }
+.nav-item i { font-size: 20px; }
+.nav-item span { font-size: 8px; font-weight: 600; }
+.sidebar-bottom { margin-top: auto; }
+.avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: #1E3A8A;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: #93C5FD;
+  margin-top: 12px;
+}
+
+/* ── MAIN ── */
+.main {
+  flex: 1;
+  margin-left: 64px;
+  padding: 28px 28px 48px;
+  background: #080E1C;
+  min-height: 100vh;
+}
+
+/* TOPBAR */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.back-btn {
+  width: 34px; height: 34px;
+  background: #0D1526;
+  border: 1px solid #1E293B;
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: #94A3B8;
+  font-size: 16px;
+  transition: all .15s;
+  text-decoration: none;
+}
+.back-btn:hover { border-color: #334155; color: #E2E8F0; }
+.breadcrumb { font-size: 13px; color: #475569; }
+.breadcrumb span { color: #E2E8F0; font-weight: 600; }
+.topbar-right { margin-left: auto; display: flex; gap: 8px; }
+.icon-btn {
+  width: 34px; height: 34px;
+  background: #0D1526;
+  border: 1px solid #1E293B;
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: #475569;
+  font-size: 16px;
+  transition: all .15s;
+}
+.icon-btn:hover { border-color: #334155; color: #E2E8F0; }
+.icon-btn.fav { color: #F59E0B; border-color: #78350F; background: #1C1207; }
+
+/* HERO */
+.hero {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  background: #0D1526;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #1E293B;
+  margin-bottom: 18px;
+}
+.hero-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  background: #1E3A5F;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: #60A5FA;
+  flex-shrink: 0;
+}
+.hero-info { flex: 1; }
+.hero-ticker { font-size: 24px; font-weight: 700; color: #E2E8F0; line-height: 1; }
+.hero-name { font-size: 13px; color: #475569; margin-top: 5px; }
+.hero-tags { display: flex; gap: 7px; margin-top: 10px; flex-wrap: wrap; }
+.tag {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 7px;
+  font-weight: 600;
+}
+.tag-blue  { background: #0F2060; color: #93C5FD; border: 1px solid #1E3A8A; }
+.tag-green { background: #052E16; color: #22C55E; border: 1px solid #14532D; }
+.hero-price-block { text-align: right; flex-shrink: 0; }
+.hero-price {
+  font-size: 32px;
+  font-weight: 700;
+  color: #E2E8F0;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: -.02em;
+}
+.hero-change { font-size: 14px; font-weight: 600; margin-top: 5px; }
+.hero-change.up { color: #22C55E; }
+.hero-change.dn { color: #F43F5E; }
+.hero-mktcap { font-size: 12px; color: #475569; margin-top: 5px; }
+
+/* CONTENT GRID */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 16px;
+}
+
+/* PANELS */
+.panel {
+  background: #0D1526;
+  border-radius: 14px;
+  padding: 18px;
+  border: 1px solid #1E293B;
+  margin-bottom: 16px;
+}
+.panel:last-child { margin-bottom: 0; }
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.panel-title { font-size: 12px; font-weight: 600; color: #94A3B8; text-transform: uppercase; letter-spacing: .06em; }
+.pills { display: flex; gap: 6px; }
+.pill {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  border: none;
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  transition: all .15s;
+}
+.pill.active { background: #1E3A8A; color: #93C5FD; }
+.pill.off { color: #475569; }
+.pill.off:hover { color: #94A3B8; }
+
+/* CHART META */
+.chart-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #131D2E;
+}
+.chart-meta-item { font-size: 12px; color: #475569; }
+.chart-meta-item span { color: #E2E8F0; font-weight: 600; }
+.chart-meta-item span.up { color: #22C55E; }
+
+/* INDICATORS GRID */
+.ind-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+.ind-card {
+  background: #080E1C;
+  border-radius: 11px;
+  padding: 14px;
+  border: 1px solid #131D2E;
+  transition: border-color .15s;
+}
+.ind-card:hover { border-color: #1E293B; }
+.ind-label {
+  font-size: 10px;
+  color: #475569;
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.ind-value { font-size: 18px; font-weight: 700; color: #E2E8F0; }
+.ind-value.good { color: #22C55E; }
+.ind-value.warn { color: #F59E0B; }
+.ind-sub { font-size: 10px; color: #475569; margin-top: 5px; line-height: 1.4; }
+
+/* POSITION */
+.pos-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #131D2E;
+}
+.pos-row:last-of-type { border-bottom: none; }
+.pos-label { font-size: 12px; color: #475569; }
+.pos-value { font-size: 13px; font-weight: 600; color: #E2E8F0; }
+.pos-value.up { color: #22C55E; }
+
+/* ADD BUTTON */
+.add-btn {
+  width: 100%;
+  background: #22C55E;
+  border: none;
+  border-radius: 10px;
+  padding: 13px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #052E16;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+  transition: opacity .15s, transform .1s;
+}
+.add-btn:hover { opacity: .9; }
+.add-btn:active { transform: scale(.98); }
+
+/* PROVENTOS TABLE */
+.prov-table { width: 100%; border-collapse: collapse; }
+.prov-table th {
+  font-size: 10px;
+  color: #475569;
+  font-weight: 600;
+  text-align: left;
+  padding: 0 8px 10px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.prov-table th:last-child { text-align: right; }
+.prov-table td {
+  padding: 10px 8px;
+  border-top: 1px solid #131D2E;
+  font-size: 12px;
+}
+.prov-table td:last-child {
+  text-align: right;
+  font-weight: 600;
+  color: #22C55E;
+  font-family: 'DM Mono', monospace;
+}
+.prov-type {
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+  background: #052E16;
+  color: #22C55E;
+  border: 1px solid #14532D;
+}
+.prov-total {
+  margin-top: 12px;
+  background: #080E1C;
+  border-radius: 9px;
+  padding: 11px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #131D2E;
+}
+.prov-total-label { font-size: 12px; color: #475569; }
+.prov-total-value { font-size: 14px; font-weight: 700; color: #22C55E; font-family: 'DM Mono', monospace; }
+
+.up { color: #22C55E; }
+.dn { color: #F43F5E; }
+
+/* RESPONSIVE */
+@media (max-width: 960px) {
+  .grid { grid-template-columns: 1fr; }
+  .ind-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .main { margin-left: 0; padding: 16px; }
+  .sidebar { display: none; }
+  .hero { flex-direction: column; }
+  .hero-price-block { text-align: left; }
+  .ind-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── PESQUISA DE ATIVOS ── */
+.search-panel { margin-bottom: 18px; }
+.search-input-wrap {
+  display: flex; align-items: center; gap: 10px;
+  background: #080E1C; border: 1px solid #1E293B; border-radius: 12px;
+  padding: 11px 14px; transition: border-color .15s;
+}
+.search-input-wrap:focus-within { border-color: #1E3A8A; }
+.search-input-wrap i { color: #475569; font-size: 16px; }
+.search-input-wrap input {
+  flex: 1; background: transparent; border: none; outline: none;
+  color: #E2E8F0; font-size: 14px; font-family: 'DM Sans', sans-serif;
+}
+.search-input-wrap input::placeholder { color: #334155; }
+.search-note, .token-note { font-size: 12px; color: #64748B; margin-top: 10px; line-height: 1.5; }
+.token-note a, .search-note a { color: #22C55E; }
+.search-note { color: #F59E0B; }
+.results { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; max-height: 340px; overflow-y: auto; }
+.res-empty { font-size: 13px; color: #475569; padding: 10px 2px; }
+.res-row {
+  display: flex; align-items: center; gap: 12px;
+  background: #080E1C; border: 1px solid #1E293B; border-radius: 12px;
+  padding: 10px 12px; cursor: pointer; transition: border-color .15s;
+}
+.res-row:hover { border-color: #334155; }
+.res-icon {
+  width: 42px; height: 42px; border-radius: 11px; background: #1E3A5F; color: #60A5FA;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; flex-shrink: 0;
+}
+.res-info { flex: 1; min-width: 0; }
+.res-ticker { font-size: 14px; font-weight: 700; color: #E2E8F0; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.res-name { font-size: 12px; color: #475569; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.res-price { font-family: 'DM Mono', monospace; font-size: 13px; color: #E2E8F0; text-align: right; }
+.res-price .up { color: #22C55E; } .res-price .dn { color: #F43F5E; }
+.res-buy {
+  background: #052E16; border: 1px solid #14532D; color: #22C55E; border-radius: 9px;
+  padding: 8px 12px; font-size: 12px; font-weight: 600; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; display: flex; align-items: center; gap: 5px; flex-shrink: 0;
+}
+.res-buy:hover { background: #064E24; }
+.asset-msg {
+  display: none; margin-bottom: 18px; padding: 12px 14px; border-radius: 12px;
+  background: #1C1207; border: 1px solid #78350F; color: #FCD34D; font-size: 13px;
+}
+.pos-value.dn { color: #F43F5E; }
+.chart-meta-item span.dn { color: #F43F5E; }
+
+/* ── MODAL DE COMPRA ── */
+.bm-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.75); display: none;
+  align-items: center; justify-content: center; z-index: 200; backdrop-filter: blur(4px);
+}
+.bm-overlay.open { display: flex; }
+.bm {
+  background: #0D1526; border-radius: 18px; border: 1px solid #1E293B; padding: 28px;
+  width: 360px; max-width: calc(100vw - 32px); box-shadow: 0 24px 60px rgba(0,0,0,.6);
+}
+.bm-title { font-size: 16px; font-weight: 700; color: #E2E8F0; margin-bottom: 4px; }
+.bm-sub { font-size: 12px; color: #475569; margin-bottom: 22px; }
+.bm-field { margin-bottom: 16px; }
+.bm-field label {
+  display: block; font-size: 10px; font-weight: 600; color: #64748B;
+  text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px;
+}
+.bm-field input {
+  width: 100%; background: #080E1C; border: 1px solid #1E293B; border-radius: 10px;
+  padding: 11px 14px; font-size: 13px; color: #E2E8F0; font-family: 'DM Sans', sans-serif; outline: none;
+}
+.bm-field input:focus { border-color: #1E3A8A; }
+.bm-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.bm-total {
+  background: #080E1C; border-radius: 10px; padding: 12px 14px; display: flex;
+  justify-content: space-between; align-items: center; margin-bottom: 20px; border: 1px solid #1E293B;
+}
+.bm-total span:first-child { font-size: 12px; color: #475569; font-weight: 600; }
+.bm-total span:last-child { font-size: 15px; font-weight: 700; color: #22C55E; }
+.bm-btns { display: flex; gap: 10px; }
+.bm-cancel {
+  flex: 1; background: #080E1C; border: 1px solid #1E293B; border-radius: 10px; padding: 12px;
+  color: #94A3B8; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer;
+}
+.bm-ok {
+  flex: 1; background: #22C55E; border: none; border-radius: 10px; padding: 12px; color: #052E16;
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-logo">R</div>
+  <a class="nav-item" href="rem_financeiro_desktop.html"><i class="ti ti-home"></i><span>Início</span></a>
+  <a class="nav-item" href="carteira.html"><i class="ti ti-chart-pie"></i><span>Carteira</span></a>
+  <a class="nav-item active" href="ativos.html"><i class="ti ti-search"></i><span>Ativos</span></a>
+  <a class="nav-item" href="rem_invest_watchlist.html"><i class="ti ti-chart-bar"></i><span>Watchlist</span></a>
+  <a class="nav-item sidebar-bottom" href="config.html"><i class="ti ti-settings"></i><span>Config</span></a>
+  <div class="avatar">LM</div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <a class="back-btn" href="#" onclick="history.back()">
+      <i class="ti ti-arrow-left"></i>
+    </a>
+    <div class="breadcrumb">Ativos &rarr; <span id="crumb-ticker">PETR4</span></div>
+    <div class="topbar-right">
+      <div class="icon-btn fav" title="Favorito"><i class="ti ti-star-filled"></i></div>
+      <div class="icon-btn" title="Compartilhar"><i class="ti ti-share"></i></div>
+    </div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="panel search-panel">
+    <div class="panel-header">
+      <span class="panel-title">Pesquisar ativos e moedas</span>
+      <div class="pills" id="search-type-pills">
+        <button class="pill active" data-t="all">Todos</button>
+        <button class="pill off" data-t="b3">Ações e FIIs</button>
+        <button class="pill off" data-t="cripto">Cripto</button>
+        <button class="pill off" data-t="moeda">Moedas</button>
+      </div>
+    </div>
+    <div class="search-input-wrap">
+      <i class="ti ti-search"></i>
+      <input type="text" id="search-q" placeholder="Pesquise por ticker ou nome: PETR4, MXRF11, Bitcoin, Dólar…" autocomplete="off"/>
+    </div>
+    <div class="token-note" id="token-note"></div>
+    <div class="search-note" id="search-note"></div>
+    <div class="results" id="search-results"></div>
+  </div>
+
+  <div class="asset-msg" id="asset-msg"></div>
+
+  <!-- HERO -->
+  <div class="hero" id="hero">
+    <div class="hero-icon" id="hero-icon">PETR4</div>
+    <div class="hero-info">
+      <div class="hero-ticker" id="hero-ticker">PETR4</div>
+      <div class="hero-name" id="hero-name">Petróleo Brasileiro S.A. — Petrobras</div>
+      <div class="hero-tags" id="hero-tags">
+        <span class="tag tag-blue">Ação PN</span>
+        <span class="tag tag-blue">B3 • IBOV</span>
+        <span class="tag tag-green">Energia</span>
+      </div>
+    </div>
+    <div class="hero-price-block">
+      <div class="hero-price" id="hero-price">R$ 38,72</div>
+      <div class="hero-change up" id="hero-change">▲ +R$ 0,52 (+1,34%) hoje</div>
+      <div class="hero-mktcap" id="hero-mktcap">Market cap: R$ 504 bilhões</div>
+    </div>
+  </div>
+
+  <!-- CONTENT GRID -->
+  <div class="grid">
+
+    <!-- LEFT COL -->
+    <div>
+
+      <!-- PRICE CHART -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Histórico de preços</span>
+          <div class="pills">
+            <button class="pill off" onclick="setPill(this)">1M</button>
+            <button class="pill off" onclick="setPill(this)">3M</button>
+            <button class="pill active" onclick="setPill(this)">1A</button>
+            <button class="pill off" onclick="setPill(this)">3A</button>
+            <button class="pill off" onclick="setPill(this)">Máx</button>
+          </div>
+        </div>
+
+        <svg id="price-chart" width="100%" height="110" viewBox="0 0 540 110" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="gc" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#22C55E" stop-opacity=".2"/>
+              <stop offset="100%" stop-color="#22C55E" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <line x1="0" y1="88" x2="540" y2="88" stroke="#1E293B" stroke-width=".5"/>
+          <line x1="0" y1="55" x2="540" y2="55" stroke="#1E293B" stroke-width=".5"/>
+          <line x1="0" y1="22" x2="540" y2="22" stroke="#1E293B" stroke-width=".5"/>
+          <path id="price-path"
+            d="M0,82 C25,78 45,85 75,74 C105,63 118,78 148,66 C178,54 192,66 220,52 C248,38 264,60 295,46 C326,32 342,42 372,28 C402,14 422,22 452,12 C472,6 490,9 540,5"
+            stroke="#22C55E" stroke-width="2" fill="none"/>
+          <path id="price-fill"
+            d="M0,82 C25,78 45,85 75,74 C105,63 118,78 148,66 C178,54 192,66 220,52 C248,38 264,60 295,46 C326,32 342,42 372,28 C402,14 422,22 452,12 C472,6 490,9 540,5 L540,110 L0,110Z"
+            fill="url(#gc)"/>
+          <text x="0"   y="106" fill="#475569" font-size="9" font-family="DM Sans,sans-serif">Jun/24</text>
+          <text x="110" y="106" fill="#475569" font-size="9" font-family="DM Sans,sans-serif">Set/24</text>
+          <text x="240" y="106" fill="#475569" font-size="9" font-family="DM Sans,sans-serif">Dez/24</text>
+          <text x="365" y="106" fill="#475569" font-size="9" font-family="DM Sans,sans-serif">Mar/25</text>
+          <text x="486" y="106" fill="#475569" font-size="9" font-family="DM Sans,sans-serif">Mai/25</text>
+          <text x="4" y="21" fill="#475569" font-size="9" font-family="DM Mono,monospace">42</text>
+          <text x="4" y="54" fill="#475569" font-size="9" font-family="DM Mono,monospace">36</text>
+          <text x="4" y="87" fill="#475569" font-size="9" font-family="DM Mono,monospace">30</text>
+        </svg>
+
+        <div class="chart-meta">
+          <div class="chart-meta-item">Mín. 52s: <span>R$ 29,40</span></div>
+          <div class="chart-meta-item">Máx. 52s: <span>R$ 42,18</span></div>
+          <div class="chart-meta-item">Variação 1A: <span class="up">+31,7%</span></div>
+          <div class="chart-meta-item">Volume médio: <span>82M</span></div>
+        </div>
+      </div>
+
+      <!-- FUNDAMENTALS -->
+      <div class="panel" id="panel-fund" style="margin-bottom:0">
+        <div class="panel-header">
+          <span class="panel-title">Indicadores fundamentalistas</span>
+        </div>
+        <div class="ind-grid">
+
+          <div class="ind-card">
+            <div class="ind-label">
+              <i class="ti ti-chart-line" style="font-size:12px;color:#3B82F6"></i>
+              P/L
+            </div>
+            <div class="ind-value good">5,8x</div>
+            <div class="ind-sub">Preço / Lucro<br>Setor: 8,2x • Abaixo ✓</div>
+          </div>
+
+          <div class="ind-card">
+            <div class="ind-label">
+              <i class="ti ti-building-bank" style="font-size:12px;color:#A78BFA"></i>
+              P/VP
+            </div>
+            <div class="ind-value good">1,2x</div>
+            <div class="ind-sub">Preço / Val. Patrimonial<br>Setor: 1,8x • Abaixo ✓</div>
+          </div>
+
+          <div class="ind-card">
+            <div class="ind-label">
+              <i class="ti ti-cash" style="font-size:12px;color:#22C55E"></i>
+              DY (12m)
+            </div>
+            <div class="ind-value good">14,2%</div>
+            <div class="ind-sub">Dividend Yield<br>R$ 5,50 / ação</div>
+          </div>
+
+          <div class="ind-card">
+            <div class="ind-label">
+              <i class="ti ti-chart-bar" style="font-size:12px;color:#F59E0B"></i>
+              ROE
+            </div>
+            <div class="ind-value good">22,4%</div>
+            <div class="ind-sub">Retorno s/ Patrimônio<br>Setor: 15,1% • Acima ✓</div>
+          </div>
+
+          <div class="ind-card">
+            <div class="ind-label">
+              <i class="ti ti-coins" style="font-size:12px;color:#60A5FA"></i>
+              EV/EBITDA
+            </div>
+            <div class="ind-value">3,1x</div>
+            <div class="ind-sub">Geração de caixa<br>sólida</div>
+          </div>
+
+          <div class="ind-card">
+            <div class="ind-label">
+              <i class="ti ti-trending-up" style="font-size:12px;color:#F87171"></i>
+              Dív. / EBITDA
+            </div>
+            <div class="ind-value warn">1,8x</div>
+            <div class="ind-sub">Dívida líquida<br>Moderado — atenção</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COL -->
+    <div>
+
+      <!-- MY POSITION -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Minha posição</span>
+        </div>
+        <div id="pos-rows">
+        <div class="pos-row">
+          <span class="pos-label">Quantidade</span>
+          <span class="pos-value">100 ações</span>
+        </div>
+        <div class="pos-row">
+          <span class="pos-label">Preço médio</span>
+          <span class="pos-value" style="font-family:'DM Mono',monospace">R$ 34,32</span>
+        </div>
+        <div class="pos-row">
+          <span class="pos-label">Total investido</span>
+          <span class="pos-value" style="font-family:'DM Mono',monospace">R$ 3.432</span>
+        </div>
+        <div class="pos-row">
+          <span class="pos-label">Valor atual</span>
+          <span class="pos-value" style="font-family:'DM Mono',monospace">R$ 3.872</span>
+        </div>
+        <div class="pos-row">
+          <span class="pos-label">Lucro / Prejuízo</span>
+          <span class="pos-value up">+R$ 440 (+12,8%)</span>
+        </div>
+        <div class="pos-row">
+          <span class="pos-label">% da carteira</span>
+          <span class="pos-value">8,0%</span>
+        </div>
+        </div>
+        <button class="add-btn" onclick="openBuy()">
+          <i class="ti ti-plus"></i> Comprar
+        </button>
+      </div>
+
+      <!-- PROVENTOS -->
+      <div class="panel" id="panel-prov" style="margin-bottom:0">
+        <div class="panel-header">
+          <span class="panel-title">Histórico de proventos</span>
+        </div>
+        <table class="prov-table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Tipo</th>
+              <th>Valor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:#94A3B8">30/04/25</td>
+              <td><span class="prov-type">JCP</span></td>
+              <td>R$ 1,87</td>
+            </tr>
+            <tr>
+              <td style="color:#94A3B8">28/02/25</td>
+              <td><span class="prov-type">DIV</span></td>
+              <td>R$ 2,10</td>
+            </tr>
+            <tr>
+              <td style="color:#94A3B8">31/10/24</td>
+              <td><span class="prov-type">JCP</span></td>
+              <td>R$ 0,76</td>
+            </tr>
+            <tr>
+              <td style="color:#94A3B8">30/08/24</td>
+              <td><span class="prov-type">DIV</span></td>
+              <td>R$ 0,77</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="prov-total">
+          <span class="prov-total-label">Total recebido (12m)</span>
+          <span class="prov-total-value">R$ 550,00</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE COMPRA -->
+<div class="bm-overlay" id="buy-modal">
+  <div class="bm">
+    <div class="bm-title" id="bm-title">Comprar</div>
+    <div class="bm-sub" id="bm-sub"></div>
+    <div class="bm-row">
+      <div class="bm-field">
+        <label>Quantidade</label>
+        <input type="number" id="bm-qty" placeholder="0" min="0" step="any" oninput="calcBuy()"/>
+      </div>
+      <div class="bm-field">
+        <label>Preço unitário (R$)</label>
+        <input type="number" id="bm-price" placeholder="0,00" min="0" step="any" oninput="calcBuy()"/>
+      </div>
+    </div>
+    <div class="bm-field">
+      <label>Data da compra</label>
+      <input type="date" id="bm-date" style="color-scheme:dark"/>
+    </div>
+    <div class="bm-total"><span>Total da compra</span><span id="bm-total">R$ 0,00</span></div>
+    <div class="bm-btns">
+      <button class="bm-cancel" onclick="closeBuy()">Cancelar</button>
+      <button class="bm-ok" onclick="confirmBuy()">Registrar compra</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ── CONFIG ── */
+  const PORTFOLIO_KEY = 'remInvest.carteira.v1';   // mesma chave usada em carteira.html
+  const TOKEN_KEY     = 'remInvest.brapiToken';    // token grátis da brapi.dev (opcional)
+
+  // mesma carteira inicial de carteira.html (usada só se ainda não existir carteira salva)
+  const SEED = [
+    { ticker: 'PETR4',  name: 'Petrobras',  type: 'acao',   sub: 'Ação • B3',             qty: 100,  avg: 34.32, price: 38.72, ic: ['#1E3A5F', '#60A5FA'] },
+    { ticker: 'MXRF11', name: 'Maxi Renda', type: 'fii',    sub: 'FII • B3',              qty: 800,  avg: 9.94,  price: 10.45, ic: ['#1A3D2B', '#4ADE80'] },
+    { ticker: 'VALE3',  name: 'Vale',       type: 'acao',   sub: 'Ação • B3',             qty: 50,   avg: 66.80, price: 62.10, ic: ['#3D1A1A', '#F87171'] },
+    { ticker: 'CDB',    name: 'CDB Nubank', type: 'rf',     sub: 'Renda Fixa • 102% CDI', qty: 1,    avg: 5000,  cdi: 102,
+      lots: [{ valor: 5000, data: '2025-11-01' }], ic: ['#1E2A50', '#A5B4FC'] },
+    { ticker: 'BTC',    name: 'Bitcoin',    type: 'cripto', sub: 'Cripto • Binance',      qty: 0.12, avg: 52400, price: 61200, ic: ['#2D2010', '#FCD34D'] }
+  ];
+
+  // sem token, a brapi só responde para estes quatro tickers
+  const SANDBOX = [
+    { ticker: 'PETR4', name: 'Petrobras PN' },
+    { ticker: 'VALE3', name: 'Vale ON' },
+    { ticker: 'ITUB4', name: 'Itaú Unibanco PN' },
+    { ticker: 'MGLU3', name: 'Magazine Luiza ON' }
+  ];
+
+  const RANGE_BRAPI = { '1M': '1mo', '3M': '3mo', '1A': '1y', '3A': '5y', 'Máx': 'max' };
+  const RANGE_DAYS  = { '1M': 30, '3M': 90, '1A': 365, '3A': 1095, 'Máx': 3650 };
+
+  /* ── ESTADO ── */
+  let selected = { src: 'b3', ticker: 'PETR4', name: 'Petrobras', type: 'acao', sub: 'Ação • B3', price: 38.72 };
+  let rangeKey = '1A';
+  let searchType = 'all';
+  let searchSeq = 0;
+  let lastResults = [];
+  let debounceTimer = null;
+
+  /* ── UTILITÁRIOS ── */
+  const $ = (id) => document.getElementById(id);
+  function esc(s) { return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function getToken() { try { return localStorage.getItem(TOKEN_KEY) || ''; } catch (e) { return ''; } }
+  function setToken(t) { try { localStorage.setItem(TOKEN_KEY, t); } catch (e) { /* ignora */ } }
+  function tokenQS(first) { const t = getToken(); return t ? (first ? '?' : '&') + 'token=' + encodeURIComponent(t) : ''; }
+  function fmtMoney(v, type) {
+    if (v === null || v === undefined || Number.isNaN(v)) return '--';
+    const dec = v >= 1 ? (type === 'moeda' ? 4 : 2) : 6;
+    return 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: v >= 1 ? 2 : 2, maximumFractionDigits: dec });
+  }
+  function fmtQty(v) { return v.toLocaleString('pt-BR', { maximumFractionDigits: 8 }); }
+  function fmtPct(p) { return (p >= 0 ? '+' : '') + p.toFixed(2).replace('.', ',') + '%'; }
+  function fmtBig(v) {
+    if (!v) return '';
+    if (v >= 1e12) return 'R$ ' + (v / 1e12).toFixed(1).replace('.', ',') + ' trilhões';
+    if (v >= 1e9)  return 'R$ ' + Math.round(v / 1e9).toLocaleString('pt-BR') + ' bilhões';
+    if (v >= 1e6)  return 'R$ ' + Math.round(v / 1e6).toLocaleString('pt-BR') + ' milhões';
+    return 'R$ ' + Math.round(v).toLocaleString('pt-BR');
+  }
+  async function getJSON(url) {
+    const res = await fetch(url);
+    if (!res.ok) { const e = new Error('HTTP ' + res.status); e.status = res.status; throw e; }
+    return res.json();
+  }
+
+  /* ── CARTEIRA (localStorage) ── */
+  function loadPortfolio() {
+    try {
+      const raw = localStorage.getItem(PORTFOLIO_KEY);
+      if (raw) { const p = JSON.parse(raw); if (Array.isArray(p)) return p; }
+    } catch (e) { /* usa a carteira inicial */ }
+    return JSON.parse(JSON.stringify(SEED));
+  }
+  function savePortfolio(p) {
+    try { localStorage.setItem(PORTFOLIO_KEY, JSON.stringify(p)); return true; } catch (e) { return false; }
+  }
+  function positionValue(a) {
+    if (a.lots) return a.lots.reduce((s, l) => s + l.valor, 0);
+    return a.qty * (a.price ?? a.avg);
+  }
+
+  /* ── PESQUISA ── */
+  async function searchB3(q) {
+    const token = getToken();
+    const Q = q.toUpperCase();
+    if (!token) {
+      return { needToken: true, items: SANDBOX.filter(s => s.ticker.includes(Q) || s.name.toUpperCase().includes(Q))
+        .map(s => ({ src: 'b3', ticker: s.ticker, name: s.name, kind: 'stock' })) };
+    }
+    try {
+      const d = await getJSON(`https://brapi.dev/api/quote/list?search=${encodeURIComponent(q)}&limit=8&token=${encodeURIComponent(token)}`);
+      const arr = d.stocks || d.results || [];
+      return { items: arr.slice(0, 8).map(s => ({
+        src: 'b3', ticker: s.stock || s.symbol, name: s.name || s.longName || s.stock || s.symbol,
+        kind: s.type || 'stock', price: s.close ?? s.regularMarketPrice, chg: s.change ?? s.regularMarketChangePercent
+      })).filter(x => x.ticker) };
+    } catch (e) {
+      return { items: [], error: (e.status === 401 || e.status === 403) ? 'Token da brapi inválido ou sem permissão.' : 'Não consegui buscar ações e FIIs agora.' };
+    }
+  }
+
+  async function searchCrypto(q) {
+    try {
+      const d = await getJSON(`https://api.coingecko.com/api/v3/search?query=${encodeURIComponent(q)}`);
+      return { items: (d.coins || []).slice(0, 6).map(c => ({
+        src: 'cripto', id: c.id, ticker: String(c.symbol || '').toUpperCase(), name: c.name, rank: c.market_cap_rank, thumb: c.thumb
+      })) };
+    } catch (e) {
+      return { items: [], error: 'Não consegui buscar criptomoedas agora (a CoinGecko limita o número de buscas por minuto).' };
+    }
+  }
+
+  let currencyCache = null;
+  async function searchCurrency(q) {
+    try {
+      if (!currencyCache) currencyCache = await getJSON('https://economia.awesomeapi.com.br/json/available');
+      const norm = (t) => String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+      const Q = norm(q);
+      const items = Object.entries(currencyCache)
+        .filter(([pair, name]) => pair.endsWith('-BRL') && (norm(pair).includes(Q) || norm(name).includes(Q)))
+        .slice(0, 6)
+        .map(([pair, name]) => ({ src: 'moeda', pair, ticker: pair.split('-')[0], name: String(name).split('/')[0] }));
+      return { items };
+    } catch (e) {
+      return { items: [], error: 'Não consegui buscar moedas agora.' };
+    }
+  }
+
+  async function runSearch() {
+    const q = $('search-q').value.trim();
+    const box = $('search-results');
+    const note = $('search-note');
+    const mySeq = ++searchSeq;
+    note.innerHTML = '';
+    if (q.length < 2) { box.innerHTML = '<div class="res-empty">Digite pelo menos 2 letras para pesquisar.</div>'; lastResults = []; renderTokenNote(); return; }
+    box.innerHTML = '<div class="res-empty">Pesquisando…</div>';
+
+    const jobs = [];
+    if (searchType === 'all' || searchType === 'b3')     jobs.push(searchB3(q));
+    if (searchType === 'all' || searchType === 'cripto') jobs.push(searchCrypto(q));
+    if (searchType === 'all' || searchType === 'moeda')  jobs.push(searchCurrency(q));
+    const parts = await Promise.all(jobs);
+    if (mySeq !== searchSeq) return;   // chegou uma busca mais nova
+
+    lastResults = parts.flatMap(p => p.items);
+    const errors = parts.map(p => p.error).filter(Boolean);
+    box.innerHTML = lastResults.length
+      ? lastResults.map(resultHTML).join('')
+      : `<div class="res-empty">Nada encontrado para "${esc(q)}".</div>`;
+    note.innerHTML = errors.map(e => `<div>${esc(e)}</div>`).join('');
+    renderTokenNote(parts.some(p => p.needToken));
+  }
+
+  function renderTokenNote(show) {
+    const el = $('token-note');
+    if (getToken()) { el.innerHTML = 'Token da brapi ativo. <a href="#" id="token-change">Trocar</a>'; }
+    else if (show || searchType === 'b3') {
+      el.innerHTML = 'Sem token, a pesquisa de ações e FIIs só encontra PETR4, VALE3, ITUB4 e MGLU3. Crie um token grátis em <b>brapi.dev</b> e <a href="#" id="token-change">cole aqui</a>.';
+    } else { el.innerHTML = ''; }
+    const a = $('token-change');
+    if (a) a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const t = prompt('Cole seu token da brapi.dev (deixe vazio para remover):', getToken());
+      if (t === null) return;
+      setToken(t.trim());
+      renderTokenNote();
+      if ($('search-q').value.trim().length >= 2) runSearch();
+    });
+  }
+
+  function kindLabel(r) {
+    if (r.src === 'cripto') return 'Cripto';
+    if (r.src === 'moeda') return 'Moeda';
+    if (/11$/.test(r.ticker) && r.kind !== 'bdr') return 'FII';
+    if (r.kind === 'bdr') return 'BDR';
+    return 'Ação';
+  }
+
+  function resultHTML(r, i) {
+    const k = kindLabel(r);
+    const price = r.price ? `<div class="res-price">${fmtMoney(r.price)}${typeof r.chg === 'number' ? ` <span class="${r.chg >= 0 ? 'up' : 'dn'}">${fmtPct(r.chg)}</span>` : ''}</div>` : '';
+    return `
+      <div class="res-row" data-i="${i}">
+        <div class="res-icon">${esc(r.ticker.slice(0, 6))}</div>
+        <div class="res-info">
+          <div class="res-ticker">${esc(r.ticker)} <span class="tag tag-blue">${k}</span>${r.src === 'moeda' ? ` <span class="tag tag-green">${esc(r.pair)}</span>` : ''}</div>
+          <div class="res-name">${esc(r.name)}</div>
+        </div>
+        ${price}
+        <button class="res-buy" data-buy="1"><i class="ti ti-plus"></i> Comprar</button>
+      </div>`;
+  }
+
+  /* ── CARREGAR UM ATIVO (hero, gráfico e posição) ── */
+  function setMsg(text) {
+    const el = $('asset-msg');
+    el.style.display = text ? 'block' : 'none';
+    el.textContent = text || '';
+  }
+
+  function paintHero(a) {
+    $('hero-icon').textContent = a.ticker.slice(0, 6);
+    $('hero-ticker').textContent = a.ticker;
+    $('hero-name').textContent = a.name;
+    $('crumb-ticker').textContent = a.ticker;
+    $('hero-tags').innerHTML = (a.tags || []).map((t, i) => `<span class="tag ${i === 0 ? 'tag-blue' : 'tag-green'}">${esc(t)}</span>`).join('');
+    $('hero-price').textContent = fmtMoney(a.price, a.type);
+    const ch = $('hero-change');
+    if (typeof a.chgPct === 'number') {
+      const up = a.chgPct >= 0;
+      ch.className = 'hero-change ' + (up ? 'up' : 'dn');
+      const delta = typeof a.chgAbs === 'number' ? `${up ? '▲ +' : '▼ -'}R$ ${Math.abs(a.chgAbs).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: a.type === 'moeda' ? 4 : 2 })} ` : (up ? '▲ ' : '▼ ');
+      ch.textContent = `${delta}(${fmtPct(a.chgPct)}) ${a.chgLabel || 'hoje'}`;
+    } else { ch.className = 'hero-change'; ch.textContent = ''; }
+    $('hero-mktcap').textContent = a.extra || '';
+  }
+
+  function showStaticPanels(show) {
+    $('panel-fund').style.display = show ? '' : 'none';
+    $('panel-prov').style.display = show ? '' : 'none';
+  }
+
+  function paintPosition() {
+    const p = loadPortfolio();
+    const a = p.find(x => x.ticker === selected.ticker);
+    const rows = $('pos-rows');
+    if (!a) {
+      rows.innerHTML = `<div class="pos-row"><span class="pos-label">Situação</span><span class="pos-value">Você ainda não tem ${esc(selected.ticker)}</span></div>`;
+      return;
+    }
+    const price = selected.price ?? a.price ?? a.avg;
+    const inv = a.qty * a.avg, val = a.lots ? positionValue(a) : a.qty * price, pnl = val - inv;
+    const total = p.reduce((s, x) => s + positionValue(x), 0);
+    const mono = "style=\"font-family:'DM Mono',monospace\"";
+    rows.innerHTML = `
+      <div class="pos-row"><span class="pos-label">Quantidade</span><span class="pos-value">${fmtQty(a.qty)}</span></div>
+      <div class="pos-row"><span class="pos-label">Preço médio</span><span class="pos-value" ${mono}>${fmtMoney(a.avg, a.type)}</span></div>
+      <div class="pos-row"><span class="pos-label">Total investido</span><span class="pos-value" ${mono}>${fmtMoney(inv)}</span></div>
+      <div class="pos-row"><span class="pos-label">Valor atual</span><span class="pos-value" ${mono}>${fmtMoney(val)}</span></div>
+      <div class="pos-row"><span class="pos-label">Lucro / Prejuízo</span><span class="pos-value ${pnl >= 0 ? 'up' : 'dn'}">${pnl >= 0 ? '+' : '-'}${fmtMoney(Math.abs(pnl))} (${fmtPct(inv ? (pnl / inv) * 100 : 0)})</span></div>
+      <div class="pos-row"><span class="pos-label">% da carteira</span><span class="pos-value">${total ? ((val / total) * 100).toFixed(1).replace('.', ',') : '0'}%</span></div>`;
+  }
+
+  async function loadAsset(r) {
+    setMsg('Carregando ' + r.ticker + '…');
+    showStaticPanels(false);
+    let a = null, points = null, note = '';
+    try {
+      if (r.src === 'b3') ({ a, points, note } = await loadB3(r));
+      else if (r.src === 'cripto') ({ a, points, note } = await loadCrypto(r));
+      else ({ a, points, note } = await loadCurrency(r));
+    } catch (e) {
+      const needsToken = r.src === 'b3' && !getToken() && (e.status === 401 || e.status === 402 || e.status === 403 || e.status === 400);
+      setMsg(needsToken
+        ? `Não consegui carregar ${r.ticker}: sem token a brapi só libera PETR4, VALE3, ITUB4 e MGLU3. Cole seu token grátis da brapi.`
+        : `Não consegui carregar ${r.ticker} agora. Tente de novo em instantes.`);
+      return;
+    }
+    setMsg('');
+    selected = a;
+    paintHero(a);
+    paintPosition();
+    renderChart(points, note);
+    $('hero').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  async function fetchB3Series(ticker, key) {
+    const tryRange = async (range) => {
+      const d = await getJSON(`https://brapi.dev/api/quote/${encodeURIComponent(ticker)}?range=${range}&interval=1d${tokenQS(false)}`);
+      const x = d.results && d.results[0];
+      if (!x) throw new Error('vazio');
+      return x;
+    };
+    let note = '', x;
+    try { x = await tryRange(RANGE_BRAPI[key]); }
+    catch (e) {
+      if (e.status === 404) throw e;
+      x = await tryRange('3mo');
+      if (key !== '1M' && key !== '3M') note = 'Plano gratuito da brapi: histórico de até 3 meses.';
+    }
+    let pts = (x.historicalDataPrice || []).filter(h => h.close != null).map(h => ({ t: h.date * 1000, v: h.close }));
+    const days = RANGE_DAYS[key];
+    if (key !== 'Máx') pts = pts.filter(p => p.t >= Date.now() - days * 86400000);
+    return { x, pts, note };
+  }
+
+  async function loadB3(r) {
+    const { x, pts, note } = await fetchB3Series(r.ticker, rangeKey);
+    const isFii = /11$/.test(r.ticker) && r.kind !== 'bdr';
+    const type = isFii ? 'fii' : 'acao';
+    const a = {
+      src: 'b3', ticker: r.ticker, name: x.longName || x.shortName || r.name || r.ticker, type,
+      sub: isFii ? 'FII • B3' : 'Ação • B3', price: x.regularMarketPrice,
+      chgAbs: x.regularMarketChange, chgPct: x.regularMarketChangePercent, chgLabel: 'hoje',
+      tags: [isFii ? 'FII' : (r.kind === 'bdr' ? 'BDR' : 'Ação'), 'B3'], extra: x.marketCap ? 'Market cap: ' + fmtBig(x.marketCap) : ''
+    };
+    return { a, points: pts, note };
+  }
+
+  async function fetchCryptoSeries(id, key) {
+    const days = Math.min(RANGE_DAYS[key], 365);
+    const d = await getJSON(`https://api.coingecko.com/api/v3/coins/${encodeURIComponent(id)}/market_chart?vs_currency=brl&days=${days}`);
+    return { pts: (d.prices || []).map(p => ({ t: p[0], v: p[1] })), note: RANGE_DAYS[key] > 365 ? 'Histórico gratuito da CoinGecko: até 1 ano.' : '' };
+  }
+
+  async function loadCrypto(r) {
+    const d = await getJSON(`https://api.coingecko.com/api/v3/simple/price?ids=${encodeURIComponent(r.id)}&vs_currencies=brl&include_24hr_change=true&include_market_cap=true`);
+    const q = d[r.id];
+    if (!q || !q.brl) throw new Error('sem preço');
+    let pts = [], note = '';
+    try { ({ pts, note } = await fetchCryptoSeries(r.id, rangeKey)); } catch (e) { note = 'Não consegui carregar o gráfico agora.'; }
+    const chg = q.brl_24h_change;
+    const a = {
+      src: 'cripto', id: r.id, ticker: r.ticker, name: r.name, type: 'cripto', sub: 'Cripto', price: q.brl,
+      chgPct: typeof chg === 'number' ? chg : undefined, chgAbs: typeof chg === 'number' ? q.brl - q.brl / (1 + chg / 100) : undefined, chgLabel: 'em 24h',
+      tags: ['Cripto', 'CoinGecko'], extra: q.brl_market_cap ? 'Market cap: ' + fmtBig(q.brl_market_cap) : ''
+    };
+    return { a, points: pts, note };
+  }
+
+  async function fetchCurrencySeries(pair, key) {
+    const days = Math.min(RANGE_DAYS[key], 1095);
+    const arr = await getJSON(`https://economia.awesomeapi.com.br/json/daily/${encodeURIComponent(pair)}/${days}`);
+    return arr.slice().reverse().map(x => ({ t: Number(x.timestamp) * 1000, v: parseFloat(x.bid) })).filter(p => p.v);
+  }
+
+  async function loadCurrency(r) {
+    const d = await getJSON(`https://economia.awesomeapi.com.br/json/last/${encodeURIComponent(r.pair)}`);
+    const q = d[r.pair.replace('-', '')];
+    if (!q) throw new Error('sem cotação');
+    let pts = [], note = '';
+    try { pts = await fetchCurrencySeries(r.pair, rangeKey); } catch (e) { note = 'Não consegui carregar o gráfico agora.'; }
+    const a = {
+      src: 'moeda', pair: r.pair, ticker: r.ticker, name: String(q.name || r.name).split('/')[0], type: 'moeda', sub: 'Moeda', price: parseFloat(q.bid),
+      chgAbs: parseFloat(q.varBid), chgPct: parseFloat(q.pctChange), chgLabel: 'hoje',
+      tags: ['Moeda', r.pair], extra: `Máx: ${fmtMoney(parseFloat(q.high), 'moeda')} • Mín: ${fmtMoney(parseFloat(q.low), 'moeda')}`
+    };
+    return { a, points: pts, note };
+  }
+
+  /* ── GRÁFICO ── */
+  function renderChart(points, note) {
+    const svg = $('price-chart');
+    svg.querySelectorAll('text').forEach(t => t.remove());
+    const meta = document.querySelector('.chart-meta');
+    if (!points || points.length < 2) {
+      $('price-path').setAttribute('d', '');
+      $('price-fill').setAttribute('d', '');
+      meta.innerHTML = `<div class="chart-meta-item">${esc(note || 'Sem histórico disponível para este período.')}</div>`;
+      return;
+    }
+    const step = Math.max(1, Math.floor(points.length / 140));
+    const pts = points.filter((_, i) => i % step === 0 || i === points.length - 1);
+    const vs = pts.map(p => p.v), min = Math.min(...vs), max = Math.max(...vs), span = (max - min) || 1;
+    const X = (i) => (i / (pts.length - 1)) * 540;
+    const Y = (v) => 6 + (1 - (v - min) / span) * 80;
+    const d = pts.map((p, i) => `${i ? 'L' : 'M'}${X(i).toFixed(1)},${Y(p.v).toFixed(1)}`).join(' ');
+    const up = pts[pts.length - 1].v >= pts[0].v;
+    const color = up ? '#22C55E' : '#F43F5E';
+    $('price-path').setAttribute('d', d);
+    $('price-path').setAttribute('stroke', color);
+    $('price-fill').setAttribute('d', d + ' L540,110 L0,110Z');
+    svg.querySelectorAll('#gc stop').forEach(s => s.setAttribute('stop-color', color));
+
+    const ns = 'http://www.w3.org/2000/svg';
+    const addText = (x, y, txt, mono) => {
+      const t = document.createElementNS(ns, 'text');
+      t.setAttribute('x', x); t.setAttribute('y', y); t.setAttribute('fill', '#475569'); t.setAttribute('font-size', '9');
+      t.setAttribute('font-family', mono ? 'DM Mono,monospace' : 'DM Sans,sans-serif');
+      t.textContent = txt; svg.appendChild(t);
+    };
+    const fmtDate = (ms) => new Date(ms).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: '2-digit' }).replace(/\./g, '');
+    addText(0, 106, fmtDate(pts[0].t));
+    addText(240, 106, fmtDate(pts[Math.floor(pts.length / 2)].t));
+    addText(470, 106, fmtDate(pts[pts.length - 1].t));
+    const short = (v) => v.toLocaleString('pt-BR', { maximumFractionDigits: v >= 100 ? 0 : 2 });
+    addText(4, 21, short(max), true); addText(4, 54, short((max + min) / 2), true); addText(4, 87, short(min), true);
+
+    const varPct = ((pts[pts.length - 1].v - pts[0].v) / pts[0].v) * 100;
+    meta.innerHTML = `
+      <div class="chart-meta-item">Mín. no período: <span>${fmtMoney(min, selected.type)}</span></div>
+      <div class="chart-meta-item">Máx. no período: <span>${fmtMoney(max, selected.type)}</span></div>
+      <div class="chart-meta-item">Variação ${esc(rangeKey)}: <span class="${varPct >= 0 ? 'up' : 'dn'}">${fmtPct(varPct)}</span></div>
+      ${note ? `<div class="chart-meta-item">${esc(note)}</div>` : ''}`;
+  }
+
+  async function reloadChart() {
+    try {
+      let pts = [], note = '';
+      if (selected.src === 'b3') ({ pts, note } = await fetchB3Series(selected.ticker, rangeKey));
+      else if (selected.src === 'cripto') ({ pts, note } = await fetchCryptoSeries(selected.id, rangeKey));
+      else pts = await fetchCurrencySeries(selected.pair, rangeKey);
+      renderChart(pts, note);
+    } catch (e) { renderChart([], 'Não consegui carregar o gráfico agora.'); }
+  }
+
+  function setPill(el) {
+    el.closest('.pills').querySelectorAll('.pill').forEach(p => {
+      p.classList.remove('active');
+      p.classList.add('off');
+    });
+    el.classList.add('active');
+    el.classList.remove('off');
+    if (el.closest('.panel') && el.closest('.panel').querySelector('#price-chart')) {
+      rangeKey = el.textContent.trim();
+      reloadChart();
+    }
+  }
+
+  /* ── COMPRA ── */
+  function openBuy() {
+    $('bm-title').textContent = 'Comprar ' + selected.ticker;
+    $('bm-sub').textContent = selected.name + (selected.src === 'moeda' ? ' • quantidade na moeda, preço em R$' : '');
+    $('bm-qty').value = '';
+    $('bm-price').value = selected.price ? String(Number(selected.price.toPrecision(8))) : '';
+    $('bm-date').valueAsDate = new Date();
+    calcBuy();
+    $('buy-modal').classList.add('open');
+  }
+  function closeBuy() { $('buy-modal').classList.remove('open'); }
+  function calcBuy() {
+    const q = parseFloat($('bm-qty').value) || 0, p = parseFloat($('bm-price').value) || 0;
+    $('bm-total').textContent = (q * p).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  }
+
+  function confirmBuy() {
+    const qty = parseFloat($('bm-qty').value), price = parseFloat($('bm-price').value);
+    if (!qty || !price || qty <= 0 || price <= 0) { alert('Informe quantidade e preço maiores que zero.'); return; }
+    const p = loadPortfolio();
+    const ex = p.find(x => x.ticker === selected.ticker);
+    if (ex) {
+      if (selected.id && ex.cgId && ex.cgId !== selected.id) {
+        alert(`Já existe outro ativo com o ticker ${selected.ticker} na sua carteira.`); return;
+      }
+      const nq = ex.qty + qty;
+      ex.avg = (ex.qty * ex.avg + qty * price) / nq;
+      ex.qty = nq;
+      ex.price = selected.price ?? ex.price;
+      if (ex.lots) ex.lots.push({ valor: qty * price, data: $('bm-date').value || new Date().toISOString().slice(0, 10) });
+      if (selected.id && !ex.cgId) ex.cgId = selected.id;
+    } else {
+      const novo = { ticker: selected.ticker, name: selected.name, type: selected.type, sub: selected.sub, qty, avg: price, price: selected.price ?? price };
+      if (selected.id) novo.cgId = selected.id;
+      if (selected.pair) novo.pair = selected.pair;
+      p.push(novo);
+    }
+    if (!savePortfolio(p)) { alert('Não consegui salvar a carteira neste navegador.'); return; }
+    closeBuy();
+    paintPosition();
+    alert(`Compra registrada!\n${fmtQty(qty)}x ${selected.ticker} a R$ ${price.toFixed(2)}\nO ativo já aparece na sua carteira.`);
+  }
+
+  /* ── EVENTOS ── */
+  $('search-q').addEventListener('input', () => { clearTimeout(debounceTimer); debounceTimer = setTimeout(runSearch, 350); });
+  $('search-q').addEventListener('keydown', (e) => { if (e.key === 'Enter') { clearTimeout(debounceTimer); runSearch(); } });
+
+  $('search-type-pills').addEventListener('click', (e) => {
+    const b = e.target.closest('.pill');
+    if (!b) return;
+    $('search-type-pills').querySelectorAll('.pill').forEach(p => { p.classList.remove('active'); p.classList.add('off'); });
+    b.classList.add('active'); b.classList.remove('off');
+    searchType = b.dataset.t;
+    if ($('search-q').value.trim().length >= 2) runSearch(); else renderTokenNote();
+  });
+
+  $('search-results').addEventListener('click', async (e) => {
+    const row = e.target.closest('.res-row');
+    if (!row) return;
+    const r = lastResults[Number(row.dataset.i)];
+    if (!r) return;
+    const wantBuy = !!e.target.closest('[data-buy]');
+    await loadAsset(r);
+    if (wantBuy && selected.ticker === r.ticker) openBuy();
+  });
+
+  $('buy-modal').addEventListener('click', (e) => { if (e.target === $('buy-modal')) closeBuy(); });
+
+  // ?q=TICKER abre direto o ativo (usado pelos links da carteira)
+  (function initFromUrl() {
+    const q = new URLSearchParams(location.search).get('q');
+    if (!q) return;
+    $('search-q').value = q;
+    runSearch().then(() => {
+      const r = lastResults.find(x => x.ticker.toUpperCase() === q.toUpperCase()) || lastResults[0];
+      if (r) loadAsset(r);
+    });
+  })();
+
+  renderTokenNote();
+  paintPosition();
+</script>
+
+</body>
+</html>

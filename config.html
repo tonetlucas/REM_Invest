@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>REM Invest — Configurações</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  width: 100%;
+  background: #080E1C;
+  font-family: 'DM Sans', sans-serif;
+  color: #E2E8F0;
+  overflow: hidden;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background: #080E1C;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 64px;
+  background: #0D1526;
+  border-right: 1px solid #1E293B;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 0;
+  gap: 4px;
+  flex-shrink: 0;
+  height: 100vh;
+}
+.sidebar-logo { font-size: 13px; font-weight: 800; color: #22C55E; margin-bottom: 20px; letter-spacing: .04em; }
+.nav-item {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  cursor: pointer; gap: 3px; color: #475569;
+  text-decoration: none; transition: all .15s;
+}
+.nav-item:hover { background: #131D2E; color: #94A3B8; }
+.nav-item.active { background: #0F2460; color: #22C55E; }
+.nav-item i { font-size: 20px; }
+.nav-item span { font-size: 8px; font-weight: 600; }
+.sidebar-bottom { margin-top: auto; }
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: #1E3A8A;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: #93C5FD; margin-top: 12px;
+}
+
+/* ── MAIN ── */
+.main {
+  flex: 1;
+  display: flex;
+  gap: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── SETTINGS NAV ── */
+.settings-nav {
+  width: 220px;
+  flex-shrink: 0;
+  padding: 24px 16px;
+  border-right: 1px solid #1E293B;
+  overflow-y: auto;
+  height: 100vh;
+}
+.settings-nav-title {
+  font-size: 10px; font-weight: 700; color: #475569;
+  text-transform: uppercase; letter-spacing: .08em;
+  margin-bottom: 10px; padding-left: 8px;
+}
+.snav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: 10px;
+  cursor: pointer; color: #64748B;
+  font-size: 13px; font-weight: 500;
+  transition: all .15s; margin-bottom: 2px;
+  user-select: none;
+}
+.snav-item:hover { background: #0D1526; color: #94A3B8; }
+.snav-item.active { background: #0F2060; color: #22C55E; }
+.snav-item i { font-size: 17px; flex-shrink: 0; }
+.snav-item.danger { color: #F87171; }
+.snav-item.danger:hover { background: #2D0A0A; color: #FCA5A5; }
+.snav-divider { height: 1px; background: #1E293B; margin: 12px 0; }
+
+/* ── SETTINGS CONTENT ── */
+.settings-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px 32px 48px;
+}
+.section-title { font-size: 20px; font-weight: 700; color: #E2E8F0; margin-bottom: 4px; }
+.section-sub   { font-size: 13px; color: #475569; margin-bottom: 24px; }
+
+/* PROFILE CARD */
+.profile-card {
+  background: #0D1526; border-radius: 16px;
+  padding: 20px; border: 1px solid #1E293B;
+  display: flex; align-items: center; gap: 18px; margin-bottom: 20px;
+}
+.profile-avatar {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: linear-gradient(135deg, #1E3A8A, #22C55E);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; font-weight: 700; color: #fff; flex-shrink: 0;
+}
+.profile-name  { font-size: 17px; font-weight: 700; color: #E2E8F0; }
+.profile-email { font-size: 13px; color: #475569; margin-top: 3px; }
+.profile-badge {
+  font-size: 10px; padding: 3px 10px; border-radius: 6px;
+  background: #052E16; color: #22C55E; border: 1px solid #14532D;
+  font-weight: 600; margin-top: 8px; display: inline-block;
+}
+.btn-edit {
+  margin-left: auto;
+  background: #080E1C; border: 1px solid #1E293B;
+  border-radius: 9px; padding: 9px 16px;
+  font-size: 12px; font-weight: 600; color: #94A3B8;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  display: flex; align-items: center; gap: 6px;
+  transition: all .15s; flex-shrink: 0;
+}
+.btn-edit:hover { border-color: #334155; color: #E2E8F0; }
+
+/* SETTINGS GROUP */
+.settings-group {
+  background: #0D1526; border-radius: 14px;
+  border: 1px solid #1E293B; overflow: hidden; margin-bottom: 18px;
+}
+.group-label {
+  font-size: 10px; font-weight: 700; color: #475569;
+  text-transform: uppercase; letter-spacing: .08em;
+  padding: 12px 18px 10px; border-bottom: 1px solid #131D2E;
+}
+.setting-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 15px 18px; border-bottom: 1px solid #131D2E;
+  transition: background .15s;
+}
+.setting-row:last-child { border-bottom: none; }
+.setting-row:hover { background: rgba(255,255,255,.02); }
+.setting-left { display: flex; align-items: center; gap: 14px; }
+.setting-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; flex-shrink: 0;
+}
+.setting-name { font-size: 13px; font-weight: 600; color: #E2E8F0; }
+.setting-desc { font-size: 11px; color: #475569; margin-top: 3px; }
+
+/* TOGGLE */
+.toggle {
+  width: 42px; height: 24px; border-radius: 12px;
+  background: #1E293B; position: relative;
+  cursor: pointer; transition: background .2s; flex-shrink: 0;
+}
+.toggle.on { background: #22C55E; }
+.toggle::after {
+  content: '';
+  position: absolute;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: #fff; top: 3px; left: 3px;
+  transition: transform .2s;
+  box-shadow: 0 1px 4px rgba(0,0,0,.4);
+}
+.toggle.on::after { transform: translateX(18px); }
+
+/* SELECT */
+.setting-select {
+  background: #080E1C; border: 1px solid #1E293B;
+  border-radius: 8px; padding: 7px 12px;
+  font-size: 12px; color: #E2E8F0;
+  font-family: 'DM Sans', sans-serif; outline: none; cursor: pointer;
+  transition: border-color .15s;
+}
+.setting-select:focus { border-color: #1E3A8A; }
+.setting-select option { background: #0D1526; }
+
+/* DANGER BUTTON */
+.btn-danger {
+  background: #2D0A0A; border: 1px solid #7F1D1D;
+  border-radius: 9px; padding: 9px 16px;
+  font-size: 12px; font-weight: 600; color: #F87171;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: all .15s; flex-shrink: 0;
+}
+.btn-danger:hover { background: #3D1010; border-color: #991B1B; color: #FCA5A5; }
+
+/* VERSION */
+.version-row {
+  display: flex; align-items: center;
+  justify-content: space-between; padding: 14px 18px;
+}
+.version-text  { font-size: 12px; color: #334155; }
+.version-badge {
+  font-size: 10px; padding: 3px 9px; border-radius: 6px;
+  background: #0F2060; color: #93C5FD; font-weight: 600;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  .settings-nav { width: 180px; }
+}
+@media (max-width: 640px) {
+  html, body { overflow: auto; }
+  .app { height: auto; min-height: 100vh; flex-direction: column; }
+  .sidebar { display: none; }
+  .main { flex-direction: column; height: auto; overflow: visible; }
+  .settings-nav { width: 100%; height: auto; border-right: none; border-bottom: 1px solid #1E293B; display: flex; flex-wrap: wrap; gap: 4px; padding: 12px; }
+  .settings-nav-title { display: none; }
+  .snav-divider { display: none; }
+  .settings-content { padding: 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-logo">R</div>
+    <a class="nav-item" href="rem_financeiro_desktop.html"><i class="ti ti-home"></i><span>Início</span></a>
+    <a class="nav-item" href="carteira.html"><i class="ti ti-chart-pie"></i><span>Carteira</span></a>
+    <a class="nav-item" href="ativos.html"><i class="ti ti-search"></i><span>Ativos</span></a>
+    <a class="nav-item" href="rem_invest_watchlist.html"><i class="ti ti-eye"></i><span>Watch</span></a>
+    <a class="nav-item active sidebar-bottom" href="config.html"><i class="ti ti-settings"></i><span>Config</span></a>
+    <div class="avatar">LM</div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- SETTINGS NAV -->
+    <div class="settings-nav">
+      <div class="settings-nav-title">Configurações</div>
+
+      <div class="snav-item active" onclick="setNav(this, 'perfil')"><i class="ti ti-user"></i>Perfil</div>
+      <div class="snav-item" onclick="setNav(this, 'notif')"><i class="ti ti-bell"></i>Notificações</div>
+      <div class="snav-item" onclick="setNav(this, 'apare')"><i class="ti ti-palette"></i>Aparência</div>
+      <div class="snav-item" onclick="setNav(this, 'moeda')"><i class="ti ti-currency-dollar"></i>Moeda e região</div>
+
+      <div class="snav-divider"></div>
+      <div class="settings-nav-title">Segurança</div>
+
+      <div class="snav-item" onclick="setNav(this, 'senha')"><i class="ti ti-lock"></i>Senha</div>
+      <div class="snav-item" onclick="setNav(this, 'auth')"><i class="ti ti-shield-check"></i>Autenticação</div>
+      <div class="snav-item" onclick="setNav(this, 'sess')"><i class="ti ti-devices"></i>Sessões ativas</div>
+
+      <div class="snav-divider"></div>
+      <div class="snav-item danger" onclick="confirmLogout()"><i class="ti ti-logout"></i>Sair da conta</div>
+    </div>
+
+    <!-- SETTINGS CONTENT -->
+    <div class="settings-content">
+
+      <div class="section-title">Perfil</div>
+      <div class="section-sub">Gerencie suas informações pessoais e preferências da conta</div>
+
+      <!-- PROFILE CARD -->
+      <div class="profile-card">
+        <div class="profile-avatar">LM</div>
+        <div>
+          <div class="profile-name">Lucas Martins</div>
+          <div class="profile-email">lucas@email.com</div>
+          <div class="profile-badge">Conta gratuita</div>
+        </div>
+        <button class="btn-edit" onclick="location.href='editar_perfil.html'"><i class="ti ti-pencil" style="font-size:13px"></i> Editar perfil</button>
+      </div>
+
+      <!-- NOTIFICAÇÕES -->
+      <div class="settings-group">
+        <div class="group-label">Notificações</div>
+
+        <div class="setting-row">
+          <div class="setting-left">
+            <div class="setting-icon" style="background:#0F2060"><i class="ti ti-bell" style="color:#93C5FD"></i></div>
+            <div>
+              <div class="setting-name">Alertas de preço</div>
+              <div class="setting-desc">Notificar quando ativo atingir meta definida</div>
+            </div>
+          </div>
+          <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-left">
+            <div class="setting-icon" style="background:#1A3D2B"><i class="ti ti-cash" style="color:#4ADE80"></i></div>
+            <div>
+              <div class="setting-name">Proventos e dividendos</div>
+              <div class="setting-desc">Avisar sobre pagamentos previstos</div>
+            </div>
+          </div>
+          <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-left">
+            <div class="setting-icon" style="background:#2D1810"><i class="ti ti-trending-down" style="color:#F87171"></i></div>
+            <div>
+              <div class="setting-name">Variações bruscas</div>
+              <div class="setting-desc">Queda ou alta acima de 5% no dia</div>
+            </div>
+          </div>
+          <div class="toggle" onclick="this.classList.toggle('on')"></div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-left">
+            <div class="setting-icon" style="background:#1E1A40"><i class="ti ti-mail" style="color:#A78BFA"></i></div>
+            <div>
+              <div class="setting-name">Resumo semanal por e-mail</div>
+              <div class="setting-desc">Relatório da carteira toda segunda-feira</div>
+            </div>
+          </div>
+          <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+        </div>
+      </div>
+
+      <!-- APARÊNCIA -->
+      <div class="settings-group">
+        <div class="group-label">Aparência e exibição</div>
+
+        <div class="setting-row">
+          <div class="setting-left">
+            <div class="setting-icon" style="background:#1A2D1A"><i class="ti ti-moon" style="color:#4ADE80"></i></div>
+            <div>
+              <div class="setting-name">Modo escuro</div>
+              <div class="setting-desc">Tema dark (padrão do REM Invest)</div>
+            </div>
+          </div>
+          <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-left">
+            <div class="setting-icon" style="background:#0F2060"><i class="ti ti-eye-off" style="color:#60A5FA"></i></div>
+            <div>
+              <div class="setting-name">Ocultar valores</div>
+              <div class="setting-desc">Esconder saldos por privacidade</div>
+            </div>
+          </div>
+          <div class="toggle" onclick="this.classList.toggle('on')"></div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-left">
+            <div class="setting-icon" style="background:#1C1207"><i class="ti ti-currency-dollar" style="color:#FCD34D"></i></div>
+            <div>
+              <div class="setting-name">Moeda padrão</div>
+              <div class="setting-desc">Exibir valores em</div>
+            </div>
+          </div>
+          <select class="setting-select">
+            <option>BRL — Real</option>
+            <option>USD — Dólar</option>
+            <option>EUR — Euro</option>
+          </select>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-left">
+            <div class="setting-icon" style="background:#1A1A2E"><i class="ti ti-chart-bar" style="color:#A78BFA"></i></div>
+            <div>
+              <div class="setting-name">Período padrão dos gráficos</div>
+              <div class="setting-desc">Intervalo ao abrir um ativo</div>
+            </div>
+          </div>
+          <select class="setting-select">
+            <option>1 mês</option>
+            <option selected>6 meses</option>
+            <option>1 ano</option>
+            <option>Máximo</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- SEGURANÇA -->
+      <div class="settings-group">
+        <div class="group-label">Segurança</div>
+
+        <div class="setting-row">
+          <div class="setting-left">
+            <div class="setting-icon" style="background:#0F2060"><i class="ti ti-shield-check" style="color:#60A5FA"></i></div>
+            <div>
+              <div class="setting-name">Autenticação em dois fatores</div>
+              <div class="setting-desc">Maior segurança no login</div>
+            </div>
+          </div>
+          <div class="toggle" onclick="this.classList.toggle('on')"></div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-left">
+            <div class="setting-icon" style="background:#1E293B"><i class="ti ti-lock" style="color:#94A3B8"></i></div>
+            <div>
+              <div class="setting-name">Alterar senha</div>
+              <div class="setting-desc">Última alteração há 3 meses</div>
+            </div>
+          </div>
+          <button class="btn-edit" onclick="alert('Redirecionando para alteração de senha...')">Alterar</button>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-left">
+            <div class="setting-icon" style="background:#2D0A0A"><i class="ti ti-trash" style="color:#F87171"></i></div>
+            <div>
+              <div class="setting-name">Excluir conta</div>
+              <div class="setting-desc">Ação irreversível — todos os dados serão apagados</div>
+            </div>
+          </div>
+          <button class="btn-danger" onclick="confirmDelete()">Excluir conta</button>
+        </div>
+      </div>
+
+      <!-- VERSION -->
+      <div class="settings-group">
+        <div class="version-row">
+          <span class="version-text">REM Invest — versão 1.0.0</span>
+          <span class="version-badge">TCC 2026</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  function setNav(el, section) {
+    document.querySelectorAll('.snav-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function confirmLogout() {
+    if (confirm('Deseja sair da sua conta?')) {
+      alert('Você saiu da conta. Redirecionando para o login...');
+      location.href = 'login.html';
+    }
+  }
+
+  function confirmDelete() {
+    if (confirm('Tem certeza? Esta ação é irreversível e todos os seus dados serão apagados permanentemente.')) {
+      alert('Conta excluída.');
+      location.href = 'login.html';
+    }
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>REM Invest — Entrar</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #080E1C;
+  color: #E2E8F0;
+  min-height: 100vh;
+  display: flex;
+}
+
+/* ── BRAND PANEL ── */
+.brand {
+  flex: 1.1;
+  background: radial-gradient(circle at 20% 15%, #0F2460 0%, #0D1526 45%, #080E1C 100%);
+  border-right: 1px solid #1E293B;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 44px;
+  position: relative;
+  overflow: hidden;
+}
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #E2E8F0;
+  letter-spacing: .02em;
+}
+.brand-logo .mark {
+  width: 32px; height: 32px;
+  border-radius: 9px;
+  background: #22C55E;
+  color: #052E16;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 800;
+}
+
+.brand-body { max-width: 380px; }
+.brand-quote {
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #E2E8F0;
+  margin-bottom: 14px;
+}
+.brand-quote span { color: #4ADE80; }
+.brand-sub { font-size: 13px; color: #64748B; line-height: 1.6; }
+
+.brand-ticker {
+  display: flex;
+  gap: 10px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+.tick {
+  background: rgba(13,21,38,.7);
+  border: 1px solid #1E293B;
+  border-radius: 10px;
+  padding: 10px 14px;
+  backdrop-filter: blur(6px);
+}
+.tick-name { font-size: 10px; color: #64748B; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+.tick-val { font-size: 13px; font-weight: 700; color: #E2E8F0; font-family: 'DM Mono', monospace; margin-top: 3px; }
+.tick-var { font-size: 11px; font-weight: 600; margin-top: 2px; }
+.up { color: #22C55E; }
+.dn { color: #F43F5E; }
+
+.brand-foot { font-size: 11px; color: #334155; }
+
+/* ── FORM PANEL ── */
+.panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+.form-wrap { width: 100%; max-width: 360px; }
+.form-title { font-size: 22px; font-weight: 700; color: #E2E8F0; margin-bottom: 6px; }
+.form-sub { font-size: 13px; color: #475569; margin-bottom: 30px; }
+
+.field { margin-bottom: 16px; }
+.field label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 7px;
+}
+.input-shell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #0D1526;
+  border: 1px solid #1E293B;
+  border-radius: 10px;
+  padding: 11px 14px;
+  transition: border-color .15s;
+}
+.input-shell:focus-within { border-color: #1E3A8A; }
+.input-shell i { color: #475569; font-size: 15px; flex-shrink: 0; }
+.input-shell input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: #E2E8F0;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  min-width: 0;
+}
+.input-shell input::placeholder { color: #334155; }
+.toggle-eye { cursor: pointer; color: #475569; font-size: 15px; }
+.toggle-eye:hover { color: #94A3B8; }
+
+.field-error {
+  font-size: 11px;
+  color: #F43F5E;
+  margin-top: 6px;
+  display: none;
+}
+.input-shell.error { border-color: #F43F5E; }
+
+.row-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  font-size: 12px;
+}
+.remember { display: flex; align-items: center; gap: 8px; color: #64748B; cursor: pointer; user-select: none; }
+.remember input {
+  width: 15px; height: 15px;
+  accent-color: #22C55E;
+  cursor: pointer;
+}
+.forgot { color: #60A5FA; text-decoration: none; font-weight: 500; }
+.forgot:hover { text-decoration: underline; }
+
+.btn-entrar {
+  width: 100%;
+  background: #22C55E;
+  color: #052E16;
+  border: none;
+  border-radius: 10px;
+  padding: 13px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity .15s, transform .1s;
+}
+.btn-entrar:hover { opacity: .92; }
+.btn-entrar:active { transform: scale(.98); }
+.btn-entrar:disabled { opacity: .6; cursor: default; }
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0;
+  color: #334155;
+  font-size: 11px;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #1E293B;
+}
+
+.btn-google {
+  width: 100%;
+  background: #0D1526;
+  border: 1px solid #1E293B;
+  border-radius: 10px;
+  padding: 12px;
+  color: #94A3B8;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  transition: border-color .15s, color .15s;
+}
+.btn-google:hover { border-color: #334155; color: #E2E8F0; }
+
+.signup {
+  text-align: center;
+  font-size: 12px;
+  color: #475569;
+  margin-top: 26px;
+}
+.signup a { color: #22C55E; text-decoration: none; font-weight: 600; }
+.signup a:hover { text-decoration: underline; }
+
+@media (max-width: 860px) {
+  .brand { display: none; }
+  .panel { padding: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- BRAND PANEL -->
+<div class="brand">
+  <div class="brand-logo"><span class="mark">R</span> REM Invest</div>
+
+  <div class="brand-body">
+    <div class="brand-quote">Acompanhe sua carteira <span>em tempo real</span>, num só lugar.</div>
+    <div class="brand-sub">Ações, fundos imobiliários, renda fixa e cripto — tudo com cotação ao vivo e uma visão clara do que você tem hoje.</div>
+
+    <div class="brand-ticker">
+      <div class="tick">
+        <div class="tick-name">Petrobras</div>
+        <div class="tick-val">R$ 38,72</div>
+        <div class="tick-var up">▲ +12,8%</div>
+      </div>
+      <div class="tick">
+        <div class="tick-name">Bitcoin</div>
+        <div class="tick-val">R$ 61.200</div>
+        <div class="tick-var up">▲ +16,8%</div>
+      </div>
+      <div class="tick">
+        <div class="tick-name">CDB Nubank</div>
+        <div class="tick-val">102% CDI</div>
+        <div class="tick-var up">▲ rendendo</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="brand-foot">REM Invest · gestão de carteira e educação financeira</div>
+</div>
+
+<!-- FORM PANEL -->
+<div class="panel">
+  <div class="form-wrap">
+    <div class="form-title">Entrar</div>
+    <div class="form-sub">Acesse sua carteira para ver o balanço atualizado.</div>
+
+    <form id="login-form" novalidate>
+      <div class="field">
+        <label>E-mail</label>
+        <div class="input-shell" id="email-shell">
+          <i class="ti ti-mail"></i>
+          <input type="email" id="email" placeholder="voce@email.com" autocomplete="email"/>
+        </div>
+        <div class="field-error" id="email-error">Informe um e-mail válido.</div>
+      </div>
+
+      <div class="field">
+        <label>Senha</label>
+        <div class="input-shell" id="password-shell">
+          <i class="ti ti-lock"></i>
+          <input type="password" id="password" placeholder="••••••••" autocomplete="current-password"/>
+          <i class="ti ti-eye toggle-eye" id="toggle-eye"></i>
+        </div>
+        <div class="field-error" id="password-error">Sua senha precisa de pelo menos 6 caracteres.</div>
+      </div>
+
+      <div class="row-between">
+        <label class="remember">
+          <input type="checkbox" id="remember"/> Lembrar de mim
+        </label>
+        <a class="forgot" href="#">Esqueceu a senha?</a>
+      </div>
+
+      <button type="submit" class="btn-entrar" id="btn-entrar">
+        <i class="ti ti-login-2"></i> Entrar
+      </button>
+    </form>
+
+    <div class="divider">ou</div>
+
+    <button class="btn-google" type="button" onclick="window.location.href='carteira.html'">
+      <i class="ti ti-brand-google"></i> Continuar com Google
+    </button>
+
+    <div class="signup">Ainda não tem conta? <a href="#">Criar conta</a></div>
+  </div>
+</div>
+
+<script>
+  const emailInput    = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+  const emailShell    = document.getElementById('email-shell');
+  const passwordShell = document.getElementById('password-shell');
+  const emailError    = document.getElementById('email-error');
+  const passwordError = document.getElementById('password-error');
+  const toggleEye     = document.getElementById('toggle-eye');
+  const btnEntrar     = document.getElementById('btn-entrar');
+
+  toggleEye.addEventListener('click', () => {
+    const isPassword = passwordInput.type === 'password';
+    passwordInput.type = isPassword ? 'text' : 'password';
+    toggleEye.className = 'ti toggle-eye ' + (isPassword ? 'ti-eye-off' : 'ti-eye');
+  });
+
+  function isValidEmail(value) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  }
+
+  document.getElementById('login-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    let valid = true;
+
+    if (!isValidEmail(emailInput.value.trim())) {
+      emailShell.classList.add('error');
+      emailError.style.display = 'block';
+      valid = false;
+    } else {
+      emailShell.classList.remove('error');
+      emailError.style.display = 'none';
+    }
+
+    if (passwordInput.value.length < 6) {
+      passwordShell.classList.add('error');
+      passwordError.style.display = 'block';
+      valid = false;
+    } else {
+      passwordShell.classList.remove('error');
+      passwordError.style.display = 'none';
+    }
+
+    if (!valid) return;
+
+    btnEntrar.disabled = true;
+    btnEntrar.innerHTML = '<i class="ti ti-loader-2"></i> Entrando…';
+
+    setTimeout(() => {
+      window.location.href = 'carteira.html';
+    }, 700);
+  });
+</script>
+
+</body>
+</html>
